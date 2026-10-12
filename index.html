@@ -1,1117 +1,1220 @@
-:root {
-        --header-color: #1e293b;
-        --button-color: #d97706;
-    }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Bumble | حلول المبيعات والتسوق</title>
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+                    colors: { 
+                        bumbleYellow: '#F5A623',
+                        bumbleGold: '#E67E22',
+                        bumbleDark: '#121212',
+                        bumbleCard: '#1E1E1E'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style> 
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background-color: #0f1015;
+            color: #f1f5f9;
+        } 
+        
+        .slide { display: none; }
+        .slide.active { display: block; }
+        
+        :root {
+            --header-color: #121212;
+            --button-color: #F5A623;
+        }
 
-    .header-bg { background-color: var(--header-color, #1e293b); }
-    .btn-bg { background-color: var(--button-color, #d97706); }
-    .btn-text { color: var(--button-color, #d97706); }
-    .btn-border { border-color: var(--button-color, #d97706); }
+        .header-bg { background-color: var(--header-color, #121212); }
+        .btn-bg { background-color: var(--button-color, #F5A623); }
+        .btn-text { color: var(--button-color, #F5A623); }
+        .btn-border { border-color: var(--button-color, #F5A623); }
 
-    #preloader {
-        background: radial-gradient(circle at center, #1e1b18 0%, #0c0a09 100%);
-        transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
-    #preloader.fade-out {
-        opacity: 0;
-        visibility: hidden;
-    }
+        /* PRELOADER STYLING & ANIMATIONS */
+        #preloader {
+            background: radial-gradient(circle at center, #1e1e24 0%, #090a0f 100%);
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        #preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-    .loader-spinner-ring {
-        background: conic-gradient(from 0deg, transparent 0deg 110deg, #f59e0b 110deg 360deg);
-        mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 5px));
-        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 5px));
-    }
+        /* Flying Bee Entrance Animation */
+        @keyframes flyInBee {
+            0% {
+                transform: translate(-120vw, -100vh) scale(0.3) rotate(-25deg);
+                opacity: 0;
+            }
+            60% {
+                transform: translate(20px, -20px) scale(1.1) rotate(5deg);
+                opacity: 1;
+            }
+            80% {
+                transform: translate(-10px, 10px) scale(0.95) rotate(-2deg);
+            }
+            100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
 
-    @keyframes beeFly {
-        0% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-8px) rotate(-2deg); }
-        100% { transform: translateY(0px) rotate(0deg); }
-    }
-    .animate-bee-fly {
-        animation: beeFly 2.5s ease-in-out infinite;
-    }
-</style>
-<!-- STREAMING_CHUNK:Rendering preloader screen with exact logo bee -->
-<div id="preloader" class="fixed inset-0 z-50 flex flex-col items-center justify-center">
-    <div class="relative w-44 h-44 flex items-center justify-center mb-6">
-        <div class="absolute inset-0 rounded-full animate-spin loader-spinner-ring shadow-[0_0_30px_rgba(245,158,11,0.6)]"></div>
-        <div id="preloaderLogoContainer" class="w-32 h-32 rounded-full bg-slate-900 shadow-2xl flex items-center justify-center overflow-hidden border-2 border-amber-500/80 p-3 animate-bee-fly">
-            <!-- Exact Bee Logo SVG -->
-            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md" fill="none" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)">
-                <defs>
-                    <linearGradient id="goldGradPre" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#FBBF24" />
-                        <stop offset="50%" stop-color="#F59E0B" />
-                        <stop offset="100%" stop-color="#D97706" />
-                    </linearGradient>
-                </defs>
-                <path d="M35 35 C 20 20, 10 30, 25 45 C 32 52, 40 45, 42 42" stroke="url(#goldGradPre)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="url(#goldGradPre)" fill-opacity="0.25"/>
-                <path d="M45 30 C 35 12, 22 20, 32 38 C 38 43, 44 38, 48 35" stroke="url(#goldGradPre)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="url(#goldGradPre)" fill-opacity="0.35"/>
-                <path d="M62 23 C 65 18, 70 16, 74 18" stroke="url(#goldGradPre)" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M58 25 C 62 20, 67 19, 71 22" stroke="url(#goldGradPre)" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="58" cy="28" r="7" stroke="url(#goldGradPre)" stroke-width="3" fill="url(#goldGradPre)" fill-opacity="0.5"/>
-                <circle cx="60" cy="27" r="2" fill="#fff"/>
-                <ellipse cx="50" cy="40" rx="9" ry="8" stroke="url(#goldGradPre)" stroke-width="3" fill="url(#goldGradPre)" fill-opacity="0.6"/>
-                <path d="M44 47 C 38 55, 33 65, 37 75 C 40 82, 50 85, 55 80 C 63 72, 65 58, 57 47 Z" stroke="url(#goldGradPre)" stroke-width="3" fill="url(#goldGradPre)" fill-opacity="0.7"/>
-                <path d="M42 55 Q 50 58 55 52" stroke="#1e1b18" stroke-width="3" stroke-linecap="round"/>
-                <path d="M39 63 Q 48 67 54 60" stroke="#1e1b18" stroke-width="3" stroke-linecap="round"/>
-                <path d="M38 71 Q 45 74 50 68" stroke="url(#goldGradPre)" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
+        /* Floating Bee Animation */
+        @keyframes hoverBee {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
+        }
+
+        /* Bee Wing Flap Animation */
+        @keyframes flapWings {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-18deg) translateY(-2px); }
+        }
+
+        /* Glow effect for fire gold theme */
+        .fire-glow {
+            filter: drop-shadow(0px 0px 18px rgba(245, 166, 35, 0.75));
+        }
+
+        .animated-bee-container {
+            animation: flyInBee 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards, hoverBee 2.5s ease-in-out 1.4s infinite;
+        }
+
+        .bee-wing {
+            transform-origin: bottom right;
+            animation: flapWings 0.15s ease-in-out infinite;
+        }
+
+        /* Smooth Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #121212; }
+        ::-webkit-scrollbar-thumb { background: #33333e; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #F5A623; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+
+    <div id="preloader" class="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden">
+        
+        <!-- Glowing Ambient Lights in Background -->
+        <div class="absolute w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+
+        <!-- Bee Animated Wrapper -->
+        <div id="preloaderBeeWrapper" class="animated-bee-container relative flex flex-col items-center cursor-pointer">
+            
+            <!-- SVG Logo for Bee (Fire Gold / Fire Yellow Styling) -->
+            <div class="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center fire-glow">
+                <svg viewBox="0 0 200 200" class="w-full h-full">
+                    <defs>
+                        <!-- Fire Gradient for Bee -->
+                        <linearGradient id="fireYellowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFE000" />
+                            <stop offset="50%" stop-color="#F5A623" />
+                            <stop offset="100%" stop-color="#E67E22" />
+                        </linearGradient>
+                        <linearGradient id="fireGlowGradiant" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#FF5100" />
+                            <stop offset="100%" stop-color="#F5A623" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Wings -->
+                    <g class="bee-wing">
+                        <path d="M 95 80 C 70 30, 20 40, 50 85 C 70 100, 90 90, 95 80 Z" fill="none" stroke="url(#fireYellowGrad)" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M 90 90 C 60 65, 30 80, 55 110 C 70 120, 85 105, 90 90 Z" fill="none" stroke="url(#fireYellowGrad)" stroke-width="5" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- Antennae & Head -->
+                    <path d="M 125 65 C 130 50, 140 45, 145 48" fill="none" stroke="url(#fireYellowGrad)" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M 135 72 C 145 60, 155 60, 158 65" fill="none" stroke="url(#fireYellowGrad)" stroke-width="5" stroke-linecap="round"/>
+                    <circle cx="125" cy="75" r="14" fill="none" stroke="url(#fireYellowGrad)" stroke-width="6"/>
+
+                    <!-- Body -->
+                    <path d="M 115 82 Q 80 100 60 135 Q 95 150 125 105 Z" fill="none" stroke="url(#fireYellowGrad)" stroke-width="7" stroke-linejoin="round"/>
+                    <path d="M 100 95 Q 80 115 70 133" fill="none" stroke="url(#fireYellowGrad)" stroke-width="6"/>
+                    <path d="M 112 108 Q 95 128 85 142" fill="none" stroke="url(#fireYellowGrad)" stroke-width="6"/>
+
+                    <!-- Rocket / Fire Tail Effect -->
+                    <path d="M 58 138 Q 45 150 35 160 Q 50 152 55 142" fill="url(#fireGlowGradiant)"/>
+                    <path d="M 64 144 Q 52 165 42 175 Q 58 160 62 148" fill="url(#fireGlowGradiant)"/>
+                </svg>
+            </div>
+
+            <!-- Bumble Title Text -->
+            <h1 class="text-4xl sm:text-5xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-600 mt-2 fire-glow">
+                BUBBLE
+            </h1>
         </div>
-    </div>
-    <h2 class="text-amber-400 font-black text-3xl tracking-widest mb-2 drop-shadow">BUMBLE</h2>
-    <p class="text-amber-200/80 text-xs sm:text-sm font-semibold tracking-wider animate-pulse">جاري تحميل منصة المبيعات الذكية...</p>
-</div>
 
-<!-- STREAMING_CHUNK:Rendering main header -->
-<header id="mainHeader" class="header-bg text-white shadow-md sticky top-0 z-40 transition-colors duration-300">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="flex items-center gap-2">
-                <div id="navLogoContainer" class="w-11 h-11 rounded-full bg-slate-900 shadow-md flex items-center justify-center overflow-hidden border border-amber-500/60 p-1.5">
-                    <!-- Exact Bee Logo SVG -->
-                    <svg viewBox="0 0 100 100" class="w-full h-full" fill="none" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)">
-                        <defs>
-                            <linearGradient id="goldGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#FBBF24" />
-                                <stop offset="50%" stop-color="#F59E0B" />
-                                <stop offset="100%" stop-color="#D97706" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M35 35 C 20 20, 10 30, 25 45 C 32 52, 40 45, 42 42" stroke="url(#goldGradNav)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="url(#goldGradNav)" fill-opacity="0.25"/>
-                        <path d="M45 30 C 35 12, 22 20, 32 38 C 38 43, 44 38, 48 35" stroke="url(#goldGradNav)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="url(#goldGradNav)" fill-opacity="0.35"/>
-                        <path d="M62 23 C 65 18, 70 16, 74 18" stroke="url(#goldGradNav)" stroke-width="2.5" stroke-linecap="round"/>
-                        <path d="M58 25 C 62 20, 67 19, 71 22" stroke="url(#goldGradNav)" stroke-width="2.5" stroke-linecap="round"/>
-                        <circle cx="58" cy="28" r="7" stroke="url(#goldGradNav)" stroke-width="3" fill="url(#goldGradNav)" fill-opacity="0.5"/>
-                        <circle cx="60" cy="27" r="2" fill="#fff"/>
-                        <ellipse cx="50" cy="40" rx="9" ry="8" stroke="url(#goldGradNav)" stroke-width="3" fill="url(#goldGradNav)" fill-opacity="0.6"/>
-                        <path d="M44 47 C 38 55, 33 65, 37 75 C 40 82, 50 85, 55 80 C 63 72, 65 58, 57 47 Z" stroke="url(#goldGradNav)" stroke-width="3" fill="url(#goldGradNav)" fill-opacity="0.7"/>
-                        <path d="M42 55 Q 50 58 55 52" stroke="#1e1b18" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M39 63 Q 48 67 54 60" stroke="#1e1b18" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M38 71 Q 45 74 50 68" stroke="url(#goldGradNav)" stroke-width="2.5" stroke-linecap="round"/>
+        <p class="text-amber-400/80 text-xs sm:text-sm font-semibold tracking-widest mt-6 animate-pulse">
+            جاري تحضير حلول المبيعات...
+        </p>
+    </div>
+
+    <header id="mainHeader" class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-white shadow-xl sticky top-0 z-40 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <div class="flex items-center gap-4">
+                <a href="#" class="flex items-center gap-3 group">
+                    <div id="navLogoContainer" class="w-11 h-11 rounded-xl bg-slate-950 border border-amber-500/30 flex items-center justify-center overflow-hidden p-1.5 shadow-[0_0_15px_rgba(245,166,35,0.2)] group-hover:border-amber-400 transition">
+                        <!-- Default Fire Gold Bee SVG Logo -->
+                        <svg viewBox="0 0 200 200" class="w-full h-full">
+                            <path d="M 95 80 C 70 30, 20 40, 50 85 C 70 100, 90 90, 95 80 Z" fill="none" stroke="#F5A623" stroke-width="10"/>
+                            <path d="M 125 65 C 130 50, 140 45, 145 48" fill="none" stroke="#F5A623" stroke-width="8"/>
+                            <circle cx="125" cy="75" r="14" fill="none" stroke="#F5A623" stroke-width="10"/>
+                            <path d="M 115 82 Q 80 100 60 135 Q 95 150 125 105 Z" fill="none" stroke="#F5A623" stroke-width="12"/>
+                            <path d="M 100 95 Q 80 115 70 133" fill="none" stroke="#F5A623" stroke-width="10"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 id="navStoreName" class="font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-500">Bumble</h1>
+                        <p class="text-[10px] text-slate-400 font-semibold -mt-1 tracking-widest">SALES SOLUTIONS</p>
+                    </div>
+                </a>
+                <div id="navSocialIcons" class="hidden sm:flex items-center gap-2 mr-2"></div>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="toggleCartModal()" class="relative bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-400 p-2.5 rounded-xl transition flex items-center gap-2 px-3.5 shadow-md">
+                    <i class="fa-solid fa-cart-shopping text-base"></i>
+                    <span class="text-xs font-bold hidden sm:inline text-slate-200">السلة</span>
+                    <span id="cartBadge" class="bg-amber-500 text-slate-950 text-xs font-black px-2 py-0.5 rounded-full">0</span>
+                </button>
+
+                <button onclick="openAdminModal()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-amber-400 p-2.5 rounded-xl transition" title="لوحة التحكم">
+                    <i class="fa-solid fa-sliders text-base"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        
+        <!-- Banners Slider -->
+        <div id="bannerContainer" class="mb-8 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900 relative h-44 sm:h-64 md:h-80 hidden">
+            <div id="slidesWrapper" class="w-full h-full relative"></div>
+            <button onclick="changeSlide(-1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-amber-500 hover:text-slate-950 text-white w-9 h-9 rounded-full flex items-center justify-center transition backdrop-blur-sm"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+            <button onclick="changeSlide(1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-amber-500 hover:text-slate-950 text-white w-9 h-9 rounded-full flex items-center justify-center transition backdrop-blur-sm"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+            <div id="slideDots" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2"></div>
+        </div>
+
+        <!-- Filters & Search Bar -->
+        <div class="mb-8 flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div class="relative w-full md:w-96">
+                <input type="text" id="searchInput" oninput="filterProducts()" placeholder="ابحث في منتجات Bumble..." class="w-full bg-slate-900 border border-slate-800 text-slate-100 rounded-2xl px-4 py-3.5 pr-11 text-sm focus:outline-none focus:border-amber-500 shadow-inner placeholder-slate-500">
+                <i class="fa-solid fa-magnifying-glass absolute right-4 top-4 text-slate-500"></i>
+            </div>
+            <div id="categoryFilters" class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+                <button onclick="setCategory('all')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs font-bold bg-amber-500 text-slate-950 transition shadow-lg shadow-amber-500/10">الكل</button>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 py-8 px-4 mt-auto">
+        <div class="container mx-auto text-center space-y-3">
+            <div class="flex items-center justify-center gap-2">
+                <div class="w-7 h-7">
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <path d="M 95 80 C 70 30, 20 40, 50 85 C 70 100, 90 90, 95 80 Z" fill="none" stroke="#F5A623" stroke-width="12"/>
+                        <circle cx="125" cy="75" r="14" fill="none" stroke="#F5A623" stroke-width="12"/>
+                        <path d="M 115 82 Q 80 100 60 135 Q 95 150 125 105 Z" fill="none" stroke="#F5A623" stroke-width="14"/>
                     </svg>
                 </div>
-                <h1 id="navStoreName" class="font-black text-lg tracking-wider text-amber-400">BUMBLE</h1>
+                <h3 id="footerStoreName" class="font-black text-xl text-amber-400 tracking-wider">Bumble</h3>
             </div>
-            <div id="navSocialIcons" class="flex items-center gap-2 mt-0.5"></div>
+            <p id="footerStoreDesc" class="text-xs text-slate-400 max-w-xl mx-auto leading-relaxed">منصة Bumble الرائدة في تقديم أفضل المنتجات والحلول التجارية بأعلى جودة وأفضل سعر.</p>
+            <p class="text-[11px] text-slate-600 pt-2 font-medium">جميع الحقوق محفوظة © Bumble 2026</p>
         </div>
-        <div class="flex items-center gap-2">
-            <button onclick="toggleCartModal()" class="relative bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition flex items-center gap-2 px-3">
-                <i class="fa-solid fa-cart-shopping text-lg"></i>
-                <span id="cartBadge" class="bg-amber-500 text-slate-900 font-extrabold text-xs px-2 py-0.5 rounded-full">0</span>
-            </button>
-            <button onclick="openAdminModal()" class="bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition" title="لوحة التحكم">
-                <i class="fa-solid fa-gear text-lg"></i>
-            </button>
-        </div>
-    </div>
-</header>
+    </footer>
 
-<!-- STREAMING_CHUNK:Rendering main store content -->
-<main class="container mx-auto px-4 py-6 flex-grow">
-    <div id="bannerContainer" class="mb-6 rounded-2xl overflow-hidden shadow-md bg-slate-200 relative h-40 sm:h-56 md:h-72 hidden">
-        <div id="slidesWrapper" class="w-full h-full relative"></div>
-        <button onclick="changeSlide(-1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-chevron-right text-xs"></i></button>
-        <button onclick="changeSlide(1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center transition"><i class="fa-solid fa-chevron-left text-xs"></i></button>
-        <div id="slideDots" class="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5"></div>
-    </div>
+    <!-- Floating WhatsApp Button -->
+    <a id="floatingWhatsappBtn" href="https://wa.me/201000000000" target="_blank" class="fixed bottom-6 left-6 bg-emerald-500 text-slate-950 w-14 h-14 rounded-2xl shadow-[0_0_25px_rgba(16,185,129,0.4)] flex items-center justify-center text-3xl hover:scale-110 transition z-40 border border-emerald-400" title="تواصل معنا عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
-    <div class="mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
-        <div class="relative w-full md:w-96">
-            <input type="text" id="searchInput" oninput="filterProducts()" placeholder="ابحث عن منتج..." class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 pr-11 text-sm focus:outline-none focus:border-amber-500 shadow-sm">
-            <i class="fa-solid fa-magnifying-glass absolute right-4 top-3.5 text-slate-400"></i>
-        </div>
-        <div id="categoryFilters" class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-            <button onclick="setCategory('all')" class="cat-btn px-4 py-2 rounded-xl text-sm font-semibold btn-bg text-white transition shadow-sm">الكل</button>
-        </div>
-    </div>
-
-    <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-</main>
-
-<!-- STREAMING_CHUNK:Rendering footer -->
-<footer class="bg-white border-t border-slate-200 py-6 px-4 mt-auto">
-    <div class="container mx-auto text-center space-y-2">
-        <h3 id="footerStoreName" class="font-bold text-base text-slate-800">Bumble</h3>
-        <p id="footerStoreDesc" class="text-xs text-slate-500 max-w-xl mx-auto leading-relaxed">أفضل المنتجات وأحدث عروض المبيعات تجدها هنا دائماً.</p>
-        <p class="text-[10px] text-slate-400 pt-2">جميع الحقوق محفوظة © 2026 Bumble</p>
-    </div>
-</footer>
-
-<!-- زر واتساب العائم -->
-<a id="floatingWhatsappBtn" href="[https://wa.me/201000000000](https://wa.me/201000000000)" target="_blank" class="fixed bottom-6 left-6 bg-green-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-3xl hover:scale-110 transition z-40" title="تواصل مع البائع عبر واتساب">
-    <i class="fa-brands fa-whatsapp"></i>
-</a>
-
-<!-- STREAMING_CHUNK:Cart Modal -->
-<div id="cartModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex justify-end">
-    <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl">
-        <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-            <h3 class="font-bold text-lg flex items-center gap-2 btn-text"><i class="fa-solid fa-cart-shopping"></i> سلة الطلبات وبيانات العميل</h3>
-            <button onclick="toggleCartModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-        </div>
-        
-        <div class="flex-grow overflow-y-auto p-4 space-y-4">
-            <div id="cartItemsContainer" class="space-y-3"></div>
-
-            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-3">
-                <h4 class="font-bold text-xs btn-text">بيانات التوصيل الخاصة بك:</h4>
-                <div>
-                    <label class="text-[11px] text-slate-600 font-semibold">الاسم:</label>
-                    <input type="text" id="clientName" placeholder="أدخل اسمك الكامل" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs mt-1 focus:outline-none focus:border-amber-500">
-                </div>
-                <div>
-                    <label class="text-[11px] text-slate-600 font-semibold">رقم الموبايل:</label>
-                    <input type="tel" id="clientPhone" placeholder="رقم الهاتف للتواصل" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs mt-1 focus:outline-none focus:border-amber-500">
-                </div>
-                <div>
-                    <label class="text-[11px] text-slate-600 font-semibold">العنوان بالتفصيل:</label>
-                    <textarea id="clientAddress" rows="2" placeholder="الشارع، العمارة، الدور، الشقة..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs mt-1 focus:outline-none focus:border-amber-500"></textarea>
-                </div>
-                <div>
-                    <label class="text-[11px] text-slate-600 font-semibold">ملاحظات إضافية (اختياري):</label>
-                    <input type="text" id="clientNotes" placeholder="مثال: الأوردر مستعجل..." class="w-full bg-white border border-slate-200 rounded-lg p-2 text-xs mt-1 focus:outline-none focus:border-amber-500">
-                </div>
+    <div id="cartModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden flex justify-end">
+        <div class="bg-slate-900 w-full max-w-md h-full flex flex-col shadow-2xl border-r border-slate-800">
+            <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950">
+                <h3 class="font-bold text-base flex items-center gap-2 text-amber-400"><i class="fa-solid fa-cart-shopping"></i> سلة طلبات Bumble</h3>
+                <button onclick="toggleCartModal()" class="text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-        </div>
+            
+            <div class="flex-grow overflow-y-auto p-4 space-y-4">
+                <div id="cartItemsContainer" class="space-y-3"></div>
 
-        <div class="p-4 border-t border-slate-100 bg-slate-50 space-y-3">
-            <div id="deliveryZoneContainer" class="space-y-1">
-                <label class="text-xs font-bold text-slate-600">اختر منطقة التوصيل:</label>
-                <select id="deliveryZoneSelect" onchange="updateCartTotal()" class="w-full bg-white border border-slate-200 rounded-xl p-2.5 text-sm focus:outline-none focus:border-amber-500"></select>
-            </div>
-            <div id="freeShippingNotice" class="hidden bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold p-2.5 rounded-xl text-center">
-                🎉 مبروك! جميع منتجات السلة عليها <span class="underline">شحن مجاني</span>.
-            </div>
-            <div class="flex justify-between items-center text-lg font-bold">
-                <span>الإجمالي الكلي (شامل الشحن):</span>
-                <span id="cartTotalPrice" class="btn-text">0 ج.م</span>
-            </div>
-            <button onclick="checkoutWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-md">
-                <i class="fa-brands fa-whatsapp text-xl"></i> إتمام الطلب عبر واتساب
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- STREAMING_CHUNK:Admin Modals -->
-<div id="adminLoginModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-6 space-y-4">
-        <div class="flex justify-between items-center">
-            <h3 class="font-bold text-lg">لوحة تحكم البائع</h3>
-            <button onclick="closeAdminLogin()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-        </div>
-        <div>
-            <label class="text-xs font-bold text-slate-600 mb-1 block">كلمة المرور:</label>
-            <input type="password" id="adminPasswordInput" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-amber-500" placeholder="أدخل كلمة المرور">
-        </div>
-        <button onclick="verifyAdminPassword()" class="w-full btn-bg text-white font-bold py-3 rounded-xl transition shadow-md">دخول</button>
-    </div>
-</div>
-
-<div id="adminDashboardModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex justify-end">
-    <div class="bg-white w-full max-w-xl h-full flex flex-col shadow-2xl">
-        <div class="p-4 border-b border-slate-100 flex justify-between items-center header-bg text-white">
-            <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-sliders"></i> لوحة تحكم وإدارة المتجر</h3>
-            <button onclick="closeAdminDashboard()" class="text-white/80 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-        </div>
-        
-        <div class="flex-grow overflow-y-auto p-6 space-y-6">
-            <!-- إعدادات عامة -->
-            <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <h4 class="font-bold text-sm btn-text">البيانات الأساسية وألوان المتجر</h4>
-                <div>
-                    <label class="text-xs font-semibold text-slate-600">اسم المتجر:</label>
-                    <input type="text" id="settingStoreName" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-sm mt-1">
-                </div>
-                <div>
-                    <label class="text-xs font-semibold text-slate-600">وصف الموقع:</label>
-                    <textarea id="settingStoreDesc" rows="2" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-sm mt-1"></textarea>
-                </div>
-                <div>
-                    <label class="text-xs font-semibold text-slate-600">رابط صورة الشعار (اختياري - اتركها فارغة لاستخدام شعار النحلة الافتراضي):</label>
-                    <input type="text" id="settingLogoUrlInput" placeholder="[https://example.com/logo.png](https://example.com/logo.png)" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-sm mt-1">
-                </div>
-                <div>
-                    <label class="text-xs font-semibold text-slate-600">رقم واتساب البائع:</label>
-                    <input type="text" id="settingWhatsApp" class="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-sm mt-1">
-                </div>
-                <div>
-                    <label class="text-xs font-semibold text-slate-600">رابط جوجل شيت (Web App URL):</label>
-                    <input type="text" id="settingGoogleSheet" readonly class="w-full bg-slate-100 text-slate-500 border border-slate-200 rounded-lg p-2.5 text-sm mt-1 cursor-not-allowed">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 pt-2">
+                <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-3">
+                    <h4 class="font-bold text-xs text-amber-400">بيانات التوصيل الخاصة بك:</h4>
                     <div>
-                        <label class="text-xs font-semibold text-slate-600 block mb-1">لون الشريط العلوي:</label>
-                        <input type="color" id="settingHeaderColor" value="#1e293b" class="w-full h-10 bg-white border border-slate-200 rounded-lg p-1 cursor-pointer">
+                        <label class="text-[11px] text-slate-400 font-semibold block mb-1">الاسم الكامل:</label>
+                        <input type="text" id="clientName" placeholder="أدخل اسمك" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5 text-xs focus:outline-none focus:border-amber-500">
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-slate-600 block mb-1">لون الأزرار والأيقونات:</label>
-                        <input type="color" id="settingButtonColor" value="#d97706" class="w-full h-10 bg-white border border-slate-200 rounded-lg p-1 cursor-pointer">
+                        <label class="text-[11px] text-slate-400 font-semibold block mb-1">رقم الموبايل:</label>
+                        <input type="tel" id="clientPhone" placeholder="رقم الهاتف" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5 text-xs focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-semibold block mb-1">العنوان التفصيلي:</label>
+                        <textarea id="clientAddress" rows="2" placeholder="المدينة، الشارع، رقم العمارة..." class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5 text-xs focus:outline-none focus:border-amber-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-semibold block mb-1">ملاحظات إضافية:</label>
+                        <input type="text" id="clientNotes" placeholder="أبي ملاحظات خاصة بالطلب..." class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5 text-xs focus:outline-none focus:border-amber-500">
                     </div>
                 </div>
             </div>
 
-            <!-- التواصل -->
-            <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <h4 class="font-bold text-sm btn-text">إدارة روابط التواصل الاجتماعي</h4>
-                <div class="grid grid-cols-2 gap-2">
-                    <select id="newSocialPlatform" class="bg-white border border-slate-200 rounded-lg p-2 text-sm">
-                        <option value="facebook">فيسبوك</option>
-                        <option value="instagram">إنستجرام</option>
-                        <option value="tiktok">تيك توك</option>
-                        <option value="youtube">يوتيوب</option>
-                        <option value="telegram">تليجرام</option>
-                        <option value="globe">موقع إلكتروني</option>
-                    </select>
-                    <input type="text" id="newSocialUrl" placeholder="رابط الحساب" class="bg-white border border-slate-200 rounded-lg p-2 text-sm">
+            <div class="p-4 border-t border-slate-800 bg-slate-950 space-y-3">
+                <div id="deliveryZoneContainer" class="space-y-1">
+                    <label class="text-xs font-bold text-slate-400 block">اختر منطقة التوصيل:</label>
+                    <select id="deliveryZoneSelect" onchange="updateCartTotal()" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5 text-xs focus:outline-none focus:border-amber-500"></select>
                 </div>
-                <button onclick="addSocialLink()" class="w-full bg-secondary text-white text-sm font-bold py-2 rounded-lg shadow transition">إضافة رابط التواصل</button>
-                <div id="adminSocialList" class="space-y-2 max-h-32 overflow-y-auto mt-2"></div>
-            </div>
-
-            <!-- البانرات -->
-            <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <h4 class="font-bold text-sm btn-text">إدارة واجهة الإعلانات</h4>
-                <div class="space-y-2">
-                    <input type="file" id="newBannerFile" accept="image/*" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm">
-                    <input type="text" id="newBannerLink" placeholder="رابط عند الضغط على الإعلان" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm">
+                <div id="freeShippingNotice" class="hidden bg-emerald-950/60 border border-emerald-800/80 text-emerald-400 text-xs font-bold p-2.5 rounded-xl text-center">
+                    🎉 مبروك! جميع المنتجات تشمل <span class="underline">شحن مجاني</span>.
                 </div>
-                <button onclick="addBannerImage()" class="w-full bg-secondary text-white text-sm font-bold py-2 rounded-lg shadow transition">إضافة صورة للإعلانات</button>
-                <div id="adminBannersList" class="space-y-2 max-h-36 overflow-y-auto mt-2"></div>
-            </div>
-
-            <!-- مناطق الشحن -->
-            <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <h4 class="font-bold text-sm btn-text">إدارة مناطق وأسعار الشحن</h4>
-                <input type="hidden" id="editingZoneIndex" value="-1">
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" id="newZoneName" placeholder="اسم المنطقة" class="bg-white border border-slate-200 rounded-lg p-2 text-sm">
-                    <input type="number" id="newZoneFee" placeholder="تكلفة الشحن (ج.م)" class="bg-white border border-slate-200 rounded-lg p-2 text-sm">
+                <div class="flex justify-between items-center text-base font-bold pt-1">
+                    <span class="text-slate-300">الإجمالي الكلي:</span>
+                    <span id="cartTotalPrice" class="text-amber-400 text-xl font-black">0 ج.م</span>
                 </div>
-                <button onclick="saveZoneItem()" id="zoneActionBtn" class="w-full bg-secondary text-white text-sm font-bold py-2 rounded-lg shadow transition">إضافة منطقة الشحن</button>
-                <div id="adminZonesList" class="space-y-2 max-h-36 overflow-y-auto mt-2"></div>
-            </div>
-
-            <!-- المنتجات -->
-            <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <h4 class="font-bold text-sm btn-text">إدارة وتعديل المنتجات والمجموعات</h4>
-                <input type="hidden" id="editingProductIndex" value="-1">
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" id="newProdName" placeholder="اسم المنتج" class="bg-white border border-slate-200 rounded-lg p-2 text-sm">
-                    <input type="number" id="newProdPrice" placeholder="السعر (ج.م)" class="bg-white border border-slate-200 rounded-lg p-2 text-sm">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="text" id="newProdDiscount" placeholder="خصم وهمي (مثال: خصم 20% أو عرض خاص)" class="bg-white border border-slate-200 rounded-lg p-2 text-sm">
-                    <textarea id="newProdDesc" placeholder="وصف تفصيلي للمنتج (اختياري)" rows="1" class="bg-white border border-slate-200 rounded-lg p-2 text-sm"></textarea>
-                </div>
-                <div class="grid grid-cols-3 gap-2 items-center">
-                    <div class="flex gap-1">
-                        <select id="newProdCategory" class="w-full bg-white border border-slate-200 rounded-lg p-2 text-sm font-semibold text-slate-700">
-                            <option value="">-- اختر المجموعة --</option>
-                        </select>
-                        <button type="button" onclick="addNewCategoryPrompt()" class="btn-bg text-white px-2.5 rounded-lg text-xs hover:bg-opacity-80 transition" title="إضافة مجموعة جديدة">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </div>
-                    <select id="newProdUnit" class="bg-white border border-slate-200 rounded-lg p-2 text-sm font-bold btn-text">
-                        <option value="قطعة">قطعة</option>
-                        <option value="كيلو">كيلو</option>
-                        <option value="عبوة">عبوة</option>
-                        <option value="دستة">دستة</option>
-                    </select>
-                    <input type="file" id="newProdImageFile" accept="image/*" class="bg-white border border-slate-200 rounded-lg p-1 text-xs">
-                </div>
-                <div class="flex items-center gap-2 mt-1 bg-white p-2 rounded-lg border border-slate-200">
-                    <input type="checkbox" id="newProdFreeShipping" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-500">
-                    <label for="newProdFreeShipping" class="text-xs font-bold text-slate-700 cursor-pointer">شحن مجاني لهذا المنتج (لا يتم حساب شحن له)</label>
-                </div>
-                <button onclick="saveProductItem()" id="productActionBtn" class="w-full bg-secondary text-white text-sm font-bold py-2 rounded-lg shadow transition">إضافة المنتج للقائمة</button>
-                <div id="adminProductsList" class="space-y-2 max-h-45 overflow-y-auto mt-2"></div>
-            </div>
-
-            <!-- زر الحفظ والتحديث الشامل -->
-            <div class="pt-4 pb-6">
-                <button onclick="saveAndSyncEverything()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-extrabold py-4 rounded-2xl shadow-xl text-base flex items-center justify-center gap-2 transition transform active:scale-95">
-                    <i class="fa-solid fa-cloud-arrow-up text-xl"></i> حفظ وتحديث النظام بالكامل وجوجل شيت
+                <button onclick="checkoutWhatsApp()" class="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-slate-950 font-black py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/10">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> إتمام الطلب عبر واتساب Bumble
                 </button>
             </div>
         </div>
     </div>
-</div>
 
-<!-- STREAMING_CHUNK:Application Logic -->
-<script>
-    const FIXED_GOOGLE_SHEET_URL = "[https://script.google.com/macros/s/AKfycbx7utqhq7doyur_Tb-zPtio-VBAfTiTRHjymsCdFiijMbECakmIWgMCHVkq_MJJhq_4HQ/exec](https://script.google.com/macros/s/AKfycbx7utqhq7doyur_Tb-zPtio-VBAfTiTRHjymsCdFiijMbECakmIWgMCHVkq_MJJhq_4HQ/exec)";
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-3xl shadow-2xl p-6 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="font-black text-lg text-amber-400">لوحة تحكم Bumble</h3>
+                <button onclick="closeAdminLogin()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div>
+                <label class="text-xs font-bold text-slate-400 mb-1 block">كلمة السر:</label>
+                <input type="password" id="adminPasswordInput" class="w-full bg-slate-950 border border-slate-800 text-slate-100 rounded-xl p-3 text-sm focus:outline-none focus:border-amber-500" placeholder="أدخل كلمة المرور">
+            </div>
+            <button onclick="verifyAdminPassword()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl transition shadow-lg shadow-amber-500/20">تسجيل الدخول</button>
+        </div>
+    </div>
 
-    const DEFAULT_PRODUCTS = [];
-    const DEFAULT_ZONES = [
-        { name: "القاهرة والجيزة", fee: 50 },
-        { name: "الإسكندرية", fee: 60 }
-    ];
+    <div id="adminDashboardModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex justify-end">
+        <div class="bg-slate-900 w-full max-w-xl h-full flex flex-col shadow-2xl border-r border-slate-800">
+            <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950 text-white">
+                <h3 class="font-bold text-base text-amber-400 flex items-center gap-2"><i class="fa-solid fa-sliders"></i> لوحة إدارة متجر Bumble</h3>
+                <button onclick="closeAdminDashboard()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <div class="flex-grow overflow-y-auto p-6 space-y-6 text-xs">
+                <!-- General Settings -->
+                <div class="space-y-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <h4 class="font-bold text-sm text-amber-400">إعدادات متجر Bumble</h4>
+                    <div>
+                        <label class="text-slate-400 font-semibold block mb-1">اسم المتجر:</label>
+                        <input type="text" id="settingStoreName" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 font-semibold block mb-1">وصف المتجر:</label>
+                        <textarea id="settingStoreDesc" rows="2" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5"></textarea>
+                    </div>
+                    <div>
+                        <label class="text-slate-400 font-semibold block mb-1">رابط صورة اللوجو (اختياري - اترك فارغاً لاستخدام نحلة Bumble):</label>
+                        <input type="text" id="settingLogoUrlInput" placeholder="https://example.com/logo.png" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 font-semibold block mb-1">رقم واتساب Bumble:</label>
+                        <input type="text" id="settingWhatsApp" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2.5">
+                    </div>
+                    <div>
+                        <label class="text-slate-400 font-semibold block mb-1">ربط جوجل شيت (Google Sheet Exec):</label>
+                        <input type="text" id="settingGoogleSheet" readonly class="w-full bg-slate-900/50 text-slate-500 border border-slate-800 rounded-xl p-2.5 cursor-not-allowed">
+                    </div>
 
-    let storeConfig = JSON.parse(localStorage.getItem('general_store_config')) || {
-        name: "Bumble",
-        description: "أفضل المنتجات وأحدث عروض المبيعات تجدها هنا دائماً.",
-        whatsapp: "201000000000",
-        headerColor: "#1e293b",
-        buttonColor: "#d97706",
-        logoUrl: ""
-    };
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <div>
+                            <label class="text-slate-400 block mb-1">لون الشريط العلوي:</label>
+                            <input type="color" id="settingHeaderColor" value="#121212" class="w-full h-10 bg-slate-900 border border-slate-800 rounded-xl p-1 cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="text-slate-400 block mb-1">لون الهوية والأزرار:</label>
+                            <input type="color" id="settingButtonColor" value="#F5A623" class="w-full h-10 bg-slate-900 border border-slate-800 rounded-xl p-1 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
 
-    storeConfig.googleSheetUrl = FIXED_GOOGLE_SHEET_URL;
-    storeConfig.name = "Bumble";
-    if(!storeConfig.headerColor) storeConfig.headerColor = "#1e293b";
-    if(!storeConfig.buttonColor) storeConfig.buttonColor = "#d97706";
+                <!-- Social Links -->
+                <div class="space-y-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <h4 class="font-bold text-sm text-amber-400">إدارة روابط التواصل الاجتماعي</h4>
+                    <div class="grid grid-cols-2 gap-2">
+                        <select id="newSocialPlatform" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                            <option value="facebook">فيسبوك</option>
+                            <option value="instagram">إنستجرام</option>
+                            <option value="tiktok">تيك توك</option>
+                            <option value="youtube">يوتيوب</option>
+                            <option value="telegram">تليجرام</option>
+                            <option value="globe">موقع إلكتروني</option>
+                        </select>
+                        <input type="text" id="newSocialUrl" placeholder="رابط الحساب" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                    </div>
+                    <button onclick="addSocialLink()" class="w-full bg-amber-500 text-slate-950 font-bold py-2 rounded-xl shadow transition">إضافة الرابط</button>
+                    <div id="adminSocialList" class="space-y-2 max-h-32 overflow-y-auto mt-2"></div>
+                </div>
 
-    const FIXED_ADMIN_PASSWORD = "444888";
+                <!-- Banners -->
+                <div class="space-y-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <h4 class="font-bold text-sm text-amber-400">بانرات العروض الإعلانية</h4>
+                    <div class="space-y-2">
+                        <input type="file" id="newBannerFile" accept="image/*" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                        <input type="text" id="newBannerLink" placeholder="رابط عند الضغط (اختياري)" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                    </div>
+                    <button onclick="addBannerImage()" class="w-full bg-amber-500 text-slate-950 font-bold py-2 rounded-xl shadow transition">إضافة صور الإعلانات</button>
+                    <div id="adminBannersList" class="space-y-2 max-h-36 overflow-y-auto mt-2"></div>
+                </div>
 
-    let socialLinks = JSON.parse(localStorage.getItem('general_store_social')) || [];
-    let bannerImages = JSON.parse(localStorage.getItem('general_store_banners')) || [];
-    
-    let storedProds = JSON.parse(localStorage.getItem('general_store_products'));
-    let products = (storedProds !== null && storedProds.length > 0) ? storedProds : DEFAULT_PRODUCTS;
+                <!-- Delivery Zones -->
+                <div class="space-y-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <h4 class="font-bold text-sm text-amber-400">مناطق وتكلفة الشحن</h4>
+                    <input type="hidden" id="editingZoneIndex" value="-1">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="newZoneName" placeholder="المنطقة" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                        <input type="number" id="newZoneFee" placeholder="التكلفة (ج.م)" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                    </div>
+                    <button onclick="saveZoneItem()" id="zoneActionBtn" class="w-full bg-amber-500 text-slate-950 font-bold py-2 rounded-xl shadow transition">إضافة منطقة الشحن</button>
+                    <div id="adminZonesList" class="space-y-2 max-h-36 overflow-y-auto mt-2"></div>
+                </div>
 
-    let storedZones = JSON.parse(localStorage.getItem('general_store_zones'));
-    let deliveryZones = (storedZones !== null && storedZones.length > 0) ? storedZones : DEFAULT_ZONES;
+                <!-- Products -->
+                <div class="space-y-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <h4 class="font-bold text-sm text-amber-400">إدارة منتجات Bumble</h4>
+                    <input type="hidden" id="editingProductIndex" value="-1">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="newProdName" placeholder="اسم المنتج" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                        <input type="number" id="newProdPrice" placeholder="السعر (ج.م)" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="newProdDiscount" placeholder="بادج خصم (مثال: خصم 15%)" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2">
+                        <textarea id="newProdDesc" placeholder="وصف المنتج" rows="1" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2"></textarea>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 items-center">
+                        <div class="flex gap-1">
+                            <select id="newProdCategory" class="w-full bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-2 font-semibold">
+                                <option value="">المجموعة</option>
+                            </select>
+                            <button type="button" onclick="addNewCategoryPrompt()" class="bg-amber-500 text-slate-950 px-2.5 rounded-xl text-xs font-black">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <select id="newProdUnit" class="bg-slate-900 border border-slate-800 text-amber-400 font-bold rounded-xl p-2">
+                            <option value="قطعة">قطعة</option>
+                            <option value="كيلو">كيلو</option>
+                            <option value="عبوة">عبوة</option>
+                            <option value="دستة">دستة</option>
+                        </select>
+                        <input type="file" id="newProdImageFile" accept="image/*" class="bg-slate-900 border border-slate-800 text-slate-200 rounded-xl p-1 text-[10px]">
+                    </div>
+                    <div class="flex items-center gap-2 mt-1 bg-slate-900 p-2.5 rounded-xl border border-slate-800">
+                        <input type="checkbox" id="newProdFreeShipping" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-500">
+                        <label for="newProdFreeShipping" class="text-slate-300 font-bold cursor-pointer">شحن مجاني لهذا المنتج</label>
+                    </div>
+                    <button onclick="saveProductItem()" id="productActionBtn" class="w-full bg-amber-500 text-slate-950 font-bold py-2 rounded-xl shadow transition">إضافة المنتج</button>
+                    <div id="adminProductsList" class="space-y-2 max-h-48 overflow-y-auto mt-2"></div>
+                </div>
 
-    let cart = [];
-    let currentCategory = 'all';
-    let currentSlideIndex = 0;
-    let slideInterval = null;
+                <!-- Sync & Save -->
+                <div class="pt-2 pb-6">
+                    <button onclick="saveAndSyncEverything()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-4 rounded-2xl shadow-xl text-sm flex items-center justify-center gap-2 transition transform active:scale-95">
+                        <i class="fa-solid fa-cloud-arrow-up text-lg"></i> حفظ وتحديث خوادم Bumble بالكامل
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    document.addEventListener('DOMContentLoaded', () => {
-        renderEverything();
-        fetchStoreDataFromCloud();
-    });
+    <script>
+        // رابط جوجل شيت الجديد الذي قمت بتحديده وتخزين بياناتك الجديدة عليه
+        const FIXED_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbx7utqhq7doyur_Tb-zPtio-VBAfTiTRHjymsCdFiijMbECakmIWgMCHVkq_MJJhq_4HQ/exec";
 
-    function hidePreloader() {
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-            preloader.classList.add('fade-out');
-            setTimeout(() => { preloader.style.display = 'none'; }, 600);
-        }
-    }
+        const DEFAULT_PRODUCTS = [];
+        const DEFAULT_ZONES = [
+            { name: "القاهرة والجيزة", fee: 50 },
+            { name: "الإسكندرية", fee: 60 }
+        ];
 
-    function renderEverything() {
-        applyStoreConfig();
-        renderSocialIcons();
-        renderBanners();
-        renderCategoryFilters();
-        renderProducts();
-        populateDeliveryZones();
-        populateProductCategories();
-    }
+        let storeConfig = JSON.parse(localStorage.getItem('bumble_store_config')) || {
+            name: "Bumble",
+            description: "منصة Bumble الرائدة في تقديم أفضل المنتجات والحلول التجارية بأعلى جودة وأفضل سعر.",
+            whatsapp: "201000000000",
+            headerColor: "#121212",
+            buttonColor: "#F5A623",
+            logoUrl: ""
+        };
 
-    function populateProductCategories(selectedCategory = '') {
-        const select = document.getElementById('newProdCategory');
-        if (!select) return;
-        const categories = [...new Set(products.map(p => p.category || 'عام'))];
-        let optionsHtml = `<option value="">-- اختر المجموعة --</option>`;
-        categories.forEach(cat => {
-            const isSelected = (cat === selectedCategory) ? 'selected' : '';
-            optionsHtml += `<option value="${cat}" ${isSelected}>${cat}</option>`;
-        });
-        select.innerHTML = optionsHtml;
-    }
+        storeConfig.googleSheetUrl = FIXED_GOOGLE_SHEET_URL;
+        storeConfig.name = "Bumble";
+        if(!storeConfig.headerColor) storeConfig.headerColor = "#121212";
+        if(!storeConfig.buttonColor) storeConfig.buttonColor = "#F5A623";
 
-    function addNewCategoryPrompt() {
-        let newCatName = prompt("أدخل اسم المجموعة الجديدة:");
-        if (newCatName && newCatName.trim() !== "") {
-            newCatName = newCatName.trim();
-            const select = document.getElementById('newProdCategory');
-            let exists = false;
-            for (let i = 0; i < select.options.length; i++) {
-                if (select.options[i].value === newCatName) { exists = true; break; }
-            }
-            if (!exists) {
-                const opt = document.createElement('option');
-                opt.value = newCatName;
-                opt.textContent = newCatName;
-                opt.selected = true;
-                select.appendChild(opt);
-            } else {
-                select.value = newCatName;
-            }
-            renderCategoryFilters();
-        }
-    }
+        const FIXED_ADMIN_PASSWORD = "444888";
 
-    function fetchStoreDataFromCloud() {
-        const url = FIXED_GOOGLE_SHEET_URL + "?action=getData&t=" + new Date().getTime();
+        let socialLinks = JSON.parse(localStorage.getItem('bumble_store_social')) || [];
+        let bannerImages = JSON.parse(localStorage.getItem('bumble_store_banners')) || [];
         
-        let isPreloaderHidden = false;
-        const safetyTimer = setTimeout(() => {
-            if (!isPreloaderHidden) {
-                isPreloaderHidden = true;
-                hidePreloader();
+        let storedProds = JSON.parse(localStorage.getItem('bumble_store_products'));
+        let products = (storedProds !== null && storedProds.length > 0) ? storedProds : DEFAULT_PRODUCTS;
+
+        let storedZones = JSON.parse(localStorage.getItem('bumble_store_zones'));
+        let deliveryZones = (storedZones !== null && storedZones.length > 0) ? storedZones : DEFAULT_ZONES;
+
+        let cart = [];
+        let currentCategory = 'all';
+        let currentSlideIndex = 0;
+        let slideInterval = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderEverything();
+            fetchStoreDataFromCloud();
+
+            const preloaderBee = document.getElementById('preloaderBeeWrapper');
+            if (preloaderBee) {
+                preloaderBee.addEventListener('click', () => {
+                    hidePreloader();
+                });
             }
-        }, 7000);
+        });
 
-        fetch(url, { cache: 'no-store' })
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.success) {
-                    if (data.config && data.config.name) {
-                        storeConfig = { ...storeConfig, ...data.config };
-                    }
-                    storeConfig.googleSheetUrl = FIXED_GOOGLE_SHEET_URL;
-                    storeConfig.name = "Bumble";
-                    if(!storeConfig.headerColor) storeConfig.headerColor = "#1e293b";
-                    if(!storeConfig.buttonColor) storeConfig.buttonColor = "#d97706";
-                    
-                    if (data.products && data.products.length > 0) {
-                        products = data.products;
-                        localStorage.setItem('general_store_products', JSON.stringify(products));
-                    }
-                    if (data.zones && data.zones.length > 0) {
-                        deliveryZones = data.zones;
-                        localStorage.setItem('general_store_zones', JSON.stringify(deliveryZones));
-                    }
-                    if (data.socialLinks) {
-                        socialLinks = data.socialLinks;
-                        localStorage.setItem('general_store_social', JSON.stringify(socialLinks));
-                    }
-                    if (data.bannerImages) {
-                        bannerImages = data.bannerImages;
-                        localStorage.setItem('general_store_banners', JSON.stringify(bannerImages));
-                    }
-
-                    renderEverything();
+        function hidePreloader() {
+            const preloader = document.getElementById('preloader');
+            const beeWrapper = document.getElementById('preloaderBeeWrapper');
+            if (preloader) {
+                if (beeWrapper) {
+                    beeWrapper.style.transition = 'transform 0.8s ease-in, opacity 0.8s ease-in';
+                    beeWrapper.style.transform = 'translate(100vw, -100vh) scale(1.4) rotate(30deg)';
+                    beeWrapper.style.opacity = '0';
                 }
-            })
-            .catch(err => {
-                console.log("العمل بالنسخة المحفوظة محلياً", err);
-            })
-            .finally(() => {
+                setTimeout(() => {
+                    preloader.classList.add('fade-out');
+                    setTimeout(() => { preloader.style.display = 'none'; }, 800);
+                }, 300);
+            }
+        }
+
+        function renderEverything() {
+            applyStoreConfig();
+            renderSocialIcons();
+            renderBanners();
+            renderCategoryFilters();
+            renderProducts();
+            populateDeliveryZones();
+            populateProductCategories();
+        }
+
+        function populateProductCategories(selectedCategory = '') {
+            const select = document.getElementById('newProdCategory');
+            if (!select) return;
+            const categories = [...new Set(products.map(p => p.category || 'عام'))];
+            let optionsHtml = `<option value="">المجموعة</option>`;
+            categories.forEach(cat => {
+                const isSelected = (cat === selectedCategory) ? 'selected' : '';
+                optionsHtml += `<option value="${cat}" ${isSelected}>${cat}</option>`;
+            });
+            select.innerHTML = optionsHtml;
+        }
+
+        function addNewCategoryPrompt() {
+            let newCatName = prompt("أدخل اسم المجموعة الجديدة لـ Bumble:");
+            if (newCatName && newCatName.trim() !== "") {
+                newCatName = newCatName.trim();
+                const select = document.getElementById('newProdCategory');
+                let exists = false;
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value === newCatName) { exists = true; break; }
+                }
+                if (!exists) {
+                    const opt = document.createElement('option');
+                    opt.value = newCatName;
+                    opt.textContent = newCatName;
+                    opt.selected = true;
+                    select.appendChild(opt);
+                } else {
+                    select.value = newCatName;
+                }
+                renderCategoryFilters();
+            }
+        }
+
+        function fetchStoreDataFromCloud() {
+            const url = FIXED_GOOGLE_SHEET_URL + "?action=getData&t=" + new Date().getTime();
+            
+            let isPreloaderHidden = false;
+            const safetyTimer = setTimeout(() => {
                 if (!isPreloaderHidden) {
                     isPreloaderHidden = true;
-                    clearTimeout(safetyTimer);
                     hidePreloader();
                 }
-            });
-    }
+            }, 3000);
 
-    function applyStoreConfig() {
-        document.getElementById('navStoreName').innerText = storeConfig.name;
-        document.getElementById('footerStoreName').innerText = storeConfig.name;
-        document.getElementById('footerStoreDesc').innerText = storeConfig.description || "";
-        document.getElementById('pageTitle').innerText = storeConfig.name;
-        document.getElementById('settingGoogleSheet').value = FIXED_GOOGLE_SHEET_URL;
-        
-        document.documentElement.style.setProperty('--header-color', storeConfig.headerColor || "#1e293b");
-        document.documentElement.style.setProperty('--button-color', storeConfig.buttonColor || "#d97706");
-        
-        const navLogo = document.getElementById('navLogoContainer');
-        const preloaderLogo = document.getElementById('preloaderLogoContainer');
+            fetch(url, { cache: 'no-store' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.success) {
+                        if (data.config && data.config.name) {
+                            storeConfig = { ...storeConfig, ...data.config };
+                        }
+                        storeConfig.googleSheetUrl = FIXED_GOOGLE_SHEET_URL;
+                        storeConfig.name = "Bumble";
+                        if(!storeConfig.headerColor) storeConfig.headerColor = "#121212";
+                        if(!storeConfig.buttonColor) storeConfig.buttonColor = "#F5A623";
+                        
+                        if (data.products && data.products.length > 0) {
+                            products = data.products;
+                            localStorage.setItem('bumble_store_products', JSON.stringify(products));
+                        }
+                        if (data.zones && data.zones.length > 0) {
+                            deliveryZones = data.zones;
+                            localStorage.setItem('bumble_store_zones', JSON.stringify(deliveryZones));
+                        }
+                        if (data.socialLinks) {
+                            socialLinks = data.socialLinks;
+                            localStorage.setItem('bumble_store_social', JSON.stringify(socialLinks));
+                        }
+                        if (data.bannerImages) {
+                            bannerImages = data.bannerImages;
+                            localStorage.setItem('bumble_store_banners', JSON.stringify(bannerImages));
+                        }
 
-        const beeSvgHtml = `
-            <svg viewBox="0 0 100 100" class="w-full h-full" fill="none" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)">
-                <defs>
-                    <linearGradient id="goldGradDynamic" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#FBBF24" />
-                        <stop offset="50%" stop-color="#F59E0B" />
-                        <stop offset="100%" stop-color="#D97706" />
-                    </linearGradient>
-                </defs>
-                <path d="M35 35 C 20 20, 10 30, 25 45 C 32 52, 40 45, 42 42" stroke="url(#goldGradDynamic)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="url(#goldGradDynamic)" fill-opacity="0.25"/>
-                <path d="M45 30 C 35 12, 22 20, 32 38 C 38 43, 44 38, 48 35" stroke="url(#goldGradDynamic)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="url(#goldGradDynamic)" fill-opacity="0.35"/>
-                <path d="M62 23 C 65 18, 70 16, 74 18" stroke="url(#goldGradDynamic)" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M58 25 C 62 20, 67 19, 71 22" stroke="url(#goldGradDynamic)" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="58" cy="28" r="7" stroke="url(#goldGradDynamic)" stroke-width="3" fill="url(#goldGradDynamic)" fill-opacity="0.5"/>
-                <circle cx="60" cy="27" r="2" fill="#fff"/>
-                <ellipse cx="50" cy="40" rx="9" ry="8" stroke="url(#goldGradDynamic)" stroke-width="3" fill="url(#goldGradDynamic)" fill-opacity="0.6"/>
-                <path d="M44 47 C 38 55, 33 65, 37 75 C 40 82, 50 85, 55 80 C 63 72, 65 58, 57 47 Z" stroke="url(#goldGradDynamic)" stroke-width="3" fill="url(#goldGradDynamic)" fill-opacity="0.7"/>
-                <path d="M42 55 Q 50 58 55 52" stroke="#1e1b18" stroke-width="3" stroke-linecap="round"/>
-                <path d="M39 63 Q 48 67 54 60" stroke="#1e1b18" stroke-width="3" stroke-linecap="round"/>
-                <path d="M38 71 Q 45 74 50 68" stroke="url(#goldGradDynamic)" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-        `;
-
-        if (storeConfig.logoUrl && storeConfig.logoUrl.trim() !== "") {
-            navLogo.innerHTML = `<img src="${storeConfig.logoUrl}" alt="Logo" class="w-full h-full object-contain">`;
-            preloaderLogo.innerHTML = `<img src="${storeConfig.logoUrl}" alt="Logo" class="w-full h-full object-contain">`;
-        } else {
-            navLogo.innerHTML = beeSvgHtml;
-            preloaderLogo.innerHTML = beeSvgHtml;
-        }
-    }
-
-    function renderSocialIcons() {
-        const container = document.getElementById('navSocialIcons');
-        if(!container) return;
-        container.innerHTML = '';
-        if(!socialLinks || socialLinks.length === 0) return;
-        socialLinks.forEach(s => {
-            let iconClass = "fa-solid fa-globe";
-            if(s.platform === 'facebook') iconClass = "fa-brands fa-facebook";
-            else if(s.platform === 'instagram') iconClass = "fa-brands fa-instagram";
-            else if(s.platform === 'tiktok') iconClass = "fa-brands fa-tiktok";
-            else if(s.platform === 'youtube') iconClass = "fa-brands fa-youtube";
-            else if(s.platform === 'telegram') iconClass = "fa-brands fa-telegram";
-            container.innerHTML += `
-                <a href="${s.url}" target="_blank" class="w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-xs text-white transition" title="${s.platform}">
-                    <i class="${iconClass}"></i>
-                </a>
-            `;
-        });
-    }
-
-    function renderBanners() {
-        const container = document.getElementById('bannerContainer');
-        const wrapper = document.getElementById('slidesWrapper');
-        const dotsContainer = document.getElementById('slideDots');
-        if(!container || !wrapper) return;
-
-        if(!bannerImages || bannerImages.length === 0) {
-            container.classList.add('hidden');
-            if(slideInterval) clearInterval(slideInterval);
-            return;
+                        renderEverything();
+                    }
+                })
+                .catch(err => {
+                    console.log("العمل بالنسخة المحفوظة محلياً لـ Bumble", err);
+                })
+                .finally(() => {
+                    if (!isPreloaderHidden) {
+                        isPreloaderHidden = true;
+                        clearTimeout(safetyTimer);
+                        hidePreloader();
+                    }
+                });
         }
 
-        container.classList.remove('hidden');
-        wrapper.innerHTML = '';
-        dotsContainer.innerHTML = '';
-
-        bannerImages.forEach((b, index) => {
-            const isActive = index === 0 ? 'active' : '';
-            wrapper.innerHTML += `
-                <div class="slide ${isActive} w-full h-full absolute inset-0 transition-opacity duration-500">
-                    <a href="${b.link || '#'}" ${b.link ? 'target="_blank"' : ''} class="w-full h-full block">
-                        <img src="${b.image || b.url}" class="w-full h-full object-cover" alt="إعلان">
-                    </a>
-                </div>
-            `;
-            dotsContainer.innerHTML += `
-                <button onclick="currentSlide(${index})" class="w-2.5 h-2.5 rounded-full ${index === 0 ? 'bg-white' : 'bg-white/50'} transition"></button>
-            `;
-        });
-
-        if(slideInterval) clearInterval(slideInterval);
-        if(bannerImages.length > 1) {
-            slideInterval = setInterval(() => { changeSlide(1); }, 4000);
-        }
-    }
-
-    function changeSlide(n) {
-        if(!bannerImages || bannerImages.length === 0) return;
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('#slideDots button');
-        if(slides.length === 0) return;
-
-        slides[currentSlideIndex].classList.remove('active');
-        if(dots[currentSlideIndex]) dots[currentSlideIndex].className = "w-2.5 h-2.5 rounded-full bg-white/50 transition";
-
-        currentSlideIndex = (currentSlideIndex + n + slides.length) % slides.length;
-
-        slides[currentSlideIndex].classList.add('active');
-        if(dots[currentSlideIndex]) dots[currentSlideIndex].className = "w-2.5 h-2.5 rounded-full bg-white transition";
-    }
-
-    function currentSlide(n) {
-        if(!bannerImages || bannerImages.length === 0) return;
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('#slideDots button');
-        if(slides.length === 0) return;
-
-        slides[currentSlideIndex].classList.remove('active');
-        if(dots[currentSlideIndex]) dots[currentSlideIndex].className = "w-2.5 h-2.5 rounded-full bg-white/50 transition";
-
-        currentSlideIndex = n;
-
-        slides[currentSlideIndex].classList.add('active');
-        if(dots[currentSlideIndex]) dots[currentSlideIndex].className = "w-2.5 h-2.5 rounded-full bg-white transition";
-    }
-
-    function toggleCartModal() {
-        const modal = document.getElementById('cartModal');
-        modal.classList.toggle('hidden');
-        renderCartItems();
-    }
-
-    function renderCartItems() {
-        const container = document.getElementById('cartItemsContainer');
-        if(!container) return;
-        container.innerHTML = '';
-        if(cart.length === 0) {
-            container.innerHTML = `<p class="text-center text-slate-400 text-sm py-4">السلة فارغة حالياً</p>`;
-            updateCartTotal();
-            return;
-        }
-        cart.forEach((item, index) => {
-            container.innerHTML += `
-                <div class="flex justify-between items-center bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-xs">
-                    <div class="flex items-center gap-2">
-                        <img src="${item.image || '[https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100](https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100)'}" class="w-10 h-10 object-cover rounded-lg">
-                        <div>
-                            <h5 class="font-bold text-slate-800">${item.name}</h5>
-                            <p class="text-slate-500">${item.price} ج.م / ${item.unit} ${item.freeShipping ? '<span class="text-emerald-600 font-bold">(شحن مجاني)</span>' : ''}</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="changeQty(${index}, -1)" class="w-6 h-6 bg-white border rounded flex items-center justify-center font-bold text-slate-600">-</button>
-                        <span class="font-bold w-4 text-center">${item.qty}</span>
-                        <button onclick="changeQty(${index}, 1)" class="w-6 h-6 bg-white border rounded flex items-center justify-center font-bold text-slate-600">+</button>
-                        <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 ml-2"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-            `;
-        });
-        updateCartTotal();
-    }
-
-    function changeQty(index, delta) {
-        cart[index].qty += delta;
-        if(cart[index].qty <= 0) { cart.splice(index, 1); }
-        renderCartItems();
-        updateCartBadge();
-    }
-
-    function removeFromCart(index) {
-        cart.splice(index, 1);
-        renderCartItems();
-        updateCartBadge();
-    }
-
-    function updateCartBadge() {
-        const badge = document.getElementById('cartBadge');
-        const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-        if(badge) badge.innerText = totalItems;
-    }
-
-    function populateDeliveryZones() {
-        const select = document.getElementById('deliveryZoneSelect');
-        if(!select) return;
-        select.innerHTML = '';
-        deliveryZones.forEach(z => {
-            select.innerHTML += `<option value="${z.fee}">${z.name} (شحن: ${z.fee} ج.م)</option>`;
-        });
-        updateCartTotal();
-    }
-
-    function updateCartTotal() {
-        let subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-        const allFreeShipping = cart.length > 0 && cart.every(item => item.freeShipping);
-        const zoneContainer = document.getElementById('deliveryZoneContainer');
-        const freeNotice = document.getElementById('freeShippingNotice');
-        const zoneSelect = document.getElementById('deliveryZoneSelect');
-
-        let shippingFee = 0;
-        if (allFreeShipping) {
-            if(zoneContainer) zoneContainer.classList.add('hidden');
-            if(freeNotice) freeNotice.classList.remove('hidden');
-            shippingFee = 0;
-        } else {
-            if(zoneContainer) zoneContainer.classList.remove('hidden');
-            if(freeNotice) freeNotice.classList.add('hidden');
-            shippingFee = zoneSelect && zoneSelect.value ? parseFloat(zoneSelect.value) : 0;
-        }
-
-        let grandTotal = subtotal + shippingFee;
-        const priceSpan = document.getElementById('cartTotalPrice');
-        if(priceSpan) priceSpan.innerText = grandTotal + " ج.م";
-    }
-
-    function renderProducts() {
-        const grid = document.getElementById('productsGrid');
-        if(!grid) return;
-        grid.innerHTML = '';
-
-        let filtered = products;
-        if(currentCategory !== 'all') {
-            filtered = products.filter(p => (p.category || 'عام') === currentCategory);
-        }
-
-        const searchInput = document.getElementById('searchInput');
-        if(searchInput && searchInput.value.trim() !== '') {
-            const query = searchInput.value.toLowerCase();
-            filtered = filtered.filter(p => p.name.toLowerCase().includes(query));
-        }
-
-        if(filtered.length === 0) {
-            grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-sm">لا توجد منتجات مسجلة. قم بإضافتها من لوحة التحكم (أيقونة الترس).</div>`;
-            return;
-        }
-
-        filtered.forEach(p => {
-            let discountBadge = p.discount ? `<span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full z-10 shadow-md animate-pulse">${p.discount}</span>` : '';
-            let freeShippingBadge = p.freeShipping ? `<span class="absolute top-2 right-12 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10 shadow-md"><i class="fa-solid fa-truck-fast"></i> شحن مجاني</span>` : '';
-            let descHtml = p.description ? `<p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5">${p.description}</p>` : '';
-
-            grid.innerHTML += `
-                <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition relative">
-                    ${discountBadge}
-                    ${freeShippingBadge}
-                    <div class="h-36 sm:h-44 bg-slate-100 relative overflow-hidden">
-                        <img src="${p.image || '[https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300](https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300)'}" class="w-full h-full object-cover">
-                        <span class="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${p.category || 'عام'}</span>
-                    </div>
-                    <div class="p-3 flex flex-col flex-grow justify-between gap-2">
-                        <div>
-                            <h4 class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-1">${p.name}</h4>
-                            ${descHtml}
-                            <p class="btn-text font-extrabold text-sm sm:text-base mt-1">${p.price} ج.م <span class="text-[10px] text-slate-400 font-normal">/ ${p.unit || 'قطعة'}</span></p>
-                        </div>
-                        <button onclick="addToCart(${p.id || 0})" class="w-full btn-bg hover:bg-opacity-90 text-white font-bold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
-                            <i class="fa-solid fa-cart-plus"></i> أضف للسلة
-                        </button>
-                    </div>
-                </div>
-            `;
-        });
-    }
-
-    function addToCart(id) {
-        const product = products.find(p => p.id === id || p.id == id);
-        if(!product) return;
-        const existing = cart.find(item => item.id === id || item.id == id);
-        if(existing) { 
-            existing.qty += 1; 
-        } else { 
-            cart.push({ ...product, qty: 1 }); 
-        }
-        updateCartBadge();
-        showToast(`تمت إضافة "${product.name}" إلى عربة التسوق بنجاح!`);
-    }
-
-    function showToast(message) {
-        let toast = document.getElementById('toastNotification');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.id = 'toastNotification';
-            toast.className = 'fixed top-5 left-1/2 -translate-x-1/2 bg-amber-600 text-white px-5 py-3 rounded-2xl shadow-2xl z-50 text-xs sm:text-sm font-bold flex items-center gap-2 transition-all duration-300 opacity-0 -translate-y-5 pointer-events-none';
-            document.body.appendChild(toast);
-        }
-        toast.innerHTML = `<i class="fa-solid fa-circle-check text-base"></i> <span>${message}</span>`;
-        setTimeout(() => {
-            toast.classList.remove('opacity-0', '-translate-y-5');
-            toast.classList.add('opacity-100', 'translate-y-0');
-        }, 10);
-        setTimeout(() => {
-            toast.classList.remove('opacity-100', 'translate-y-0');
-            toast.classList.add('opacity-0', '-translate-y-5');
-        }, 2500);
-    }
-
-    function filterProducts() { renderProducts(); }
-
-    function setCategory(cat) {
-        currentCategory = cat;
-        document.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.className = "cat-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white border border-slate-200 text-slate-600 transition shadow-sm";
-        });
-        event.target.className = "cat-btn px-4 py-2 rounded-xl text-sm font-semibold btn-bg text-white transition shadow-sm";
-        renderProducts();
-    }
-
-    function renderCategoryFilters() {
-        const container = document.getElementById('categoryFilters');
-        if(!container) return;
-        const categories = [...new Set(products.map(p => p.category || 'عام'))];
-        container.innerHTML = `<button onclick="setCategory('all')" class="cat-btn px-4 py-2 rounded-xl text-sm font-semibold ${currentCategory === 'all' ? 'btn-bg text-white' : 'bg-white border border-slate-200 text-slate-600'} transition shadow-sm">الكل</button>`;
-        categories.forEach(cat => {
-            const isActive = currentCategory === cat;
-            container.innerHTML += `<button onclick="setCategory('${cat}')" class="cat-btn px-4 py-2 rounded-xl text-sm font-semibold ${isActive ? 'btn-bg text-white' : 'bg-white border border-slate-200 text-slate-600'} transition shadow-sm">${cat}</button>`;
-        });
-    }
-
-    function openAdminModal() { document.getElementById('adminLoginModal').classList.remove('hidden'); }
-    function closeAdminLogin() { document.getElementById('adminLoginModal').classList.add('hidden'); document.getElementById('adminPasswordInput').value = ''; }
-
-    function verifyAdminPassword() {
-        const pass = document.getElementById('adminPasswordInput').value;
-        if(pass === FIXED_ADMIN_PASSWORD) {
-            closeAdminLogin();
-            openAdminDashboard();
-        } else { alert("كلمة المرور غير صحيحة!"); }
-    }
-
-    function openAdminDashboard() {
-        document.getElementById('adminDashboardModal').classList.remove('hidden');
-        loadAdminDataToInputs();
-        renderAdminSocialList();
-        renderAdminBannersList();
-        renderAdminZonesList();
-        renderAdminProductsList();
-        populateProductCategories();
-    }
-
-    function closeAdminDashboard() { document.getElementById('adminDashboardModal').classList.add('hidden'); }
-
-    function loadAdminDataToInputs() {
-        document.getElementById('settingStoreName').value = storeConfig.name;
-        document.getElementById('settingStoreDesc').value = storeConfig.description || "";
-        document.getElementById('settingLogoUrlInput').value = storeConfig.logoUrl || "";
-        document.getElementById('settingWhatsApp').value = storeConfig.whatsapp;
-        document.getElementById('settingGoogleSheet').value = FIXED_GOOGLE_SHEET_URL;
-        document.getElementById('settingHeaderColor').value = storeConfig.headerColor || "#1e293b";
-        document.getElementById('settingButtonColor').value = storeConfig.buttonColor || "#d97706";
-    }
-
-    function addSocialLink() {
-        const platform = document.getElementById('newSocialPlatform').value;
-        const url = document.getElementById('newSocialUrl').value.trim();
-        if(!url) { alert("يرجى إدخال رابط الحساب"); return; }
-        socialLinks.push({ platform, url });
-        document.getElementById('newSocialUrl').value = '';
-        renderAdminSocialList();
-    }
-
-    function renderAdminSocialList() {
-        const list = document.getElementById('adminSocialList');
-        if(!list) return;
-        list.innerHTML = '';
-        socialLinks.forEach((s, idx) => {
-            list.innerHTML += `
-                <div class="flex justify-between items-center bg-white p-2 rounded border text-xs">
-                    <span><b>${s.platform}:</b> ${s.url}</span>
-                    <button onclick="removeSocialLink(${idx})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            `;
-        });
-    }
-    function removeSocialLink(idx) { socialLinks.splice(idx, 1); renderAdminSocialList(); }
-
-    function addBannerImage() {
-        const fileInput = document.getElementById('newBannerFile');
-        const linkInput = document.getElementById('newBannerLink');
-        const link = linkInput.value.trim();
-        if(fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                bannerImages.push({ url: e.target.result, link });
-                fileInput.value = ''; linkInput.value = '';
-                renderAdminBannersList();
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        } else { alert("يرجى اختيار صورة للإعلان"); }
-    }
-
-    function renderAdminBannersList() {
-        const list = document.getElementById('adminBannersList');
-        if(!list) return;
-        list.innerHTML = '';
-        bannerImages.forEach((b, idx) => {
-            list.innerHTML += `
-                <div class="flex justify-between items-center bg-white p-2 rounded border text-xs">
-                    <img src="${b.url || b.image}" class="w-10 h-6 object-cover rounded">
-                    <span class="truncate max-w-[200px]">${b.link || 'بدون رابط'}</span>
-                    <button onclick="removeBannerImage(${idx})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
-                </div>
-            `;
-        });
-    }
-    function removeBannerImage(idx) { bannerImages.splice(idx, 1); renderAdminBannersList(); }
-
-    function saveZoneItem() {
-        const name = document.getElementById('newZoneName').value.trim();
-        const fee = parseFloat(document.getElementById('newZoneFee').value);
-        const editIdx = parseInt(document.getElementById('editingZoneIndex').value);
-        if(!name || isNaN(fee)) { alert("يرجى إدخال اسم المنطقة وتكلفة الشحن"); return; }
-        if(editIdx >= 0) {
-            deliveryZones[editIdx] = { name, fee };
-            document.getElementById('editingZoneIndex').value = -1;
-            document.getElementById('zoneActionBtn').innerText = "إضافة منطقة الشحن";
-        } else { deliveryZones.push({ name, fee }); }
-        document.getElementById('newZoneName').value = '';
-        document.getElementById('newZoneFee').value = '';
-        renderAdminZonesList(); populateDeliveryZones();
-    }
-
-    function renderAdminZonesList() {
-        const list = document.getElementById('adminZonesList');
-        if(!list) return;
-        list.innerHTML = '';
-        deliveryZones.forEach((z, idx) => {
-            list.innerHTML += `
-                <div class="flex justify-between items-center bg-white p-2 rounded border text-xs">
-                    <span><b>${z.name}:</b> ${z.fee} ج.م</span>
-                    <div class="flex gap-2">
-                        <button onclick="editZone(${idx})" class="text-blue-500"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="removeZone(${idx})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-            `;
-        });
-    }
-    function editZone(idx) {
-        document.getElementById('newZoneName').value = deliveryZones[idx].name;
-        document.getElementById('newZoneFee').value = deliveryZones[idx].fee;
-        document.getElementById('editingZoneIndex').value = idx;
-        document.getElementById('zoneActionBtn').innerText = "تعديل منطقة الشحن";
-    }
-    function removeZone(idx) { deliveryZones.splice(idx, 1); renderAdminZonesList(); populateDeliveryZones(); }
-
-    function saveProductItem() {
-        const name = document.getElementById('newProdName').value.trim();
-        const price = parseFloat(document.getElementById('newProdPrice').value);
-        const discount = document.getElementById('newProdDiscount').value.trim();
-        const description = document.getElementById('newProdDesc').value.trim();
-        const category = document.getElementById('newProdCategory').value || 'عام';
-        const unit = document.getElementById('newProdUnit').value;
-        const freeShipping = document.getElementById('newProdFreeShipping').checked;
-        const editIdx = parseInt(document.getElementById('editingProductIndex').value);
-        const fileInput = document.getElementById('newProdImageFile');
-
-        if(!name || isNaN(price)) { alert("يرجى إدخال اسم المنتج والسعر على الأقل"); return; }
-        let imageUrl = editIdx >= 0 ? products[editIdx].image : '[https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300](https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300)';
-
-        const proceedSave = (imgResult) => {
-            if(imgResult) imageUrl = imgResult;
-            if(editIdx >= 0) {
-                products[editIdx] = { ...products[editIdx], name, price, discount, description, category, unit, freeShipping, image: imageUrl };
-                document.getElementById('editingProductIndex').value = -1;
-                document.getElementById('productActionBtn').innerText = "إضافة المنتج للقائمة";
+        function applyStoreConfig() {
+            document.getElementById('navStoreName').innerText = storeConfig.name;
+            document.getElementById('footerStoreName').innerText = storeConfig.name;
+            document.getElementById('footerStoreDesc').innerText = storeConfig.description || "";
+            document.getElementById('pageTitle').innerText = storeConfig.name + " | حلول المبيعات والتسوق";
+            document.getElementById('settingGoogleSheet').value = FIXED_GOOGLE_SHEET_URL;
+            
+            document.documentElement.style.setProperty('--header-color', storeConfig.headerColor || "#121212");
+            document.documentElement.style.setProperty('--button-color', storeConfig.buttonColor || "#F5A623");
+            
+            const navLogo = document.getElementById('navLogoContainer');
+            if (storeConfig.logoUrl && storeConfig.logoUrl.trim() !== "") {
+                navLogo.innerHTML = `<img src="${storeConfig.logoUrl}" alt="Bumble Logo" class="w-full h-full object-contain">`;
             } else {
-                const newId = products.length > 0 ? Math.max(...products.map(p => p.id || 0)) + 1 : 1;
-                products.push({ id: newId, name, price, discount, description, category, unit, freeShipping, image: imageUrl });
-            }
-            document.getElementById('newProdName').value = '';
-            document.getElementById('newProdPrice').value = '';
-            document.getElementById('newProdDiscount').value = '';
-            document.getElementById('newProdDesc').value = '';
-            document.getElementById('newProdFreeShipping').checked = false;
-            fileInput.value = '';
-            renderAdminProductsList(); renderCategoryFilters(); renderProducts(); populateProductCategories();
-        };
-
-        if(fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) { proceedSave(e.target.result); };
-            reader.readAsDataURL(fileInput.files[0]);
-        } else { proceedSave(null); }
-    }
-
-    function renderAdminProductsList() {
-        const list = document.getElementById('adminProductsList');
-        if(!list) return;
-        list.innerHTML = '';
-        products.forEach((p, idx) => {
-            list.innerHTML += `
-                <div class="flex justify-between items-center bg-white p-2 rounded border text-xs">
-                    <div class="flex items-center gap-2">
-                        <img src="${p.image}" class="w-8 h-8 object-cover rounded">
-                        <span><b>${p.name}</b> (${p.price} ج.م) ${p.freeShipping ? '<span class="text-emerald-600 font-bold">[شحن مجاني]</span>' : ''}</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="editProduct(${idx})" class="text-blue-500"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="removeProduct(${idx})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-            `;
-        });
-    }
-    function editProduct(idx) {
-        const p = products[idx];
-        document.getElementById('newProdName').value = p.name;
-        document.getElementById('newProdPrice').value = p.price;
-        document.getElementById('newProdDiscount').value = p.discount || '';
-        document.getElementById('newProdDesc').value = p.description || '';
-        document.getElementById('newProdUnit').value = p.unit || 'قطعة';
-        document.getElementById('newProdFreeShipping').checked = !!p.freeShipping;
-        document.getElementById('editingProductIndex').value = idx;
-        document.getElementById('productActionBtn').innerText = "تعديل المنتج";
-        populateProductCategories(p.category);
-    }
-    function removeProduct(idx) {
-        products.splice(idx, 1);
-        renderAdminProductsList(); renderCategoryFilters(); renderProducts(); populateProductCategories();
-    }
-
-    function saveAndSyncEverything() {
-        storeConfig.name = "Bumble";
-        storeConfig.description = document.getElementById('settingStoreDesc').value.trim();
-        storeConfig.logoUrl = document.getElementById('settingLogoUrlInput').value.trim();
-        storeConfig.whatsapp = document.getElementById('settingWhatsApp').value.trim() || storeConfig.whatsapp;
-        storeConfig.googleSheetUrl = FIXED_GOOGLE_SHEET_URL;
-        storeConfig.headerColor = document.getElementById('settingHeaderColor').value;
-        storeConfig.buttonColor = document.getElementById('settingButtonColor').value;
-
-        localStorage.setItem('general_store_config', JSON.stringify(storeConfig));
-        localStorage.setItem('general_store_products', JSON.stringify(products));
-        localStorage.setItem('general_store_zones', JSON.stringify(deliveryZones));
-        localStorage.setItem('general_store_social', JSON.stringify(socialLinks));
-        localStorage.setItem('general_store_banners', JSON.stringify(bannerImages));
-
-        renderEverything();
-
-        const payload = {
-            action: "saveData",
-            config: storeConfig,
-            products: products,
-            zones: deliveryZones,
-            socialLinks: socialLinks,
-            bannerImages: bannerImages
-        };
-
-        const btn = event.target;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> جاري الحفظ والتحديث في جوجل شيت...`;
-        btn.disabled = true;
-
-        fetch(FIXED_GOOGLE_SHEET_URL, {
-            method: "POST",
-            body: JSON.stringify(payload)
-        }).then(res => res.json())
-          .then(response => {
-            alert("✅ تم الحفظ والتحديث في جوجل شيت بنجاح تام!");
-            closeAdminDashboard();
-        }).catch(err => {
-            alert("✅ تم الحفظ وتحديث المتجر بنجاح.");
-            closeAdminDashboard();
-        }).finally(() => {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    }
-
-    function checkoutWhatsApp() {
-        const name = document.getElementById('clientName').value.trim();
-        const phone = document.getElementById('clientPhone').value.trim();
-        const address = document.getElementById('clientAddress').value.trim();
-        const notes = document.getElementById('clientNotes').value.trim();
-        const zoneSelect = document.getElementById('deliveryZoneSelect');
-        
-        if (!name || !phone || !address) { alert("يرجى إكمال بيانات التوصيل (الاسم، الهاتف، العنوان)."); return; }
-        if (cart.length === 0) { alert("السلة فارغة!"); return; }
-
-        const allFreeShipping = cart.every(item => item.freeShipping);
-        let selectedZoneName = "شحن مجاني";
-        let shippingFee = 0;
-
-        if (!allFreeShipping) {
-            if (zoneSelect && zoneSelect.selectedIndex >= 0) {
-                selectedZoneName = zoneSelect.options[zoneSelect.selectedIndex].text;
-                shippingFee = parseFloat(zoneSelect.value) || 0;
+                navLogo.innerHTML = `
+                    <svg viewBox="0 0 200 200" class="w-full h-full fire-glow">
+                        <path d="M 95 80 C 70 30, 20 40, 50 85 C 70 100, 90 90, 95 80 Z" fill="none" stroke="#F5A623" stroke-width="12"/>
+                        <path d="M 125 65 C 130 50, 140 45, 145 48" fill="none" stroke="#F5A623" stroke-width="10"/>
+                        <circle cx="125" cy="75" r="14" fill="none" stroke="#F5A623" stroke-width="12"/>
+                        <path d="M 115 82 Q 80 100 60 135 Q 95 150 125 105 Z" fill="none" stroke="#F5A623" stroke-width="14"/>
+                        <path d="M 100 95 Q 80 115 70 133" fill="none" stroke="#F5A623" stroke-width="12"/>
+                    </svg>
+                `;
             }
         }
 
-        let itemsSummaryText = "";
-        let subtotal = 0;
+        function renderSocialIcons() {
+            const container = document.getElementById('navSocialIcons');
+            if(!container) return;
+            container.innerHTML = '';
+            if(!socialLinks || socialLinks.length === 0) return;
+            socialLinks.forEach(s => {
+                let iconClass = "fa-solid fa-globe";
+                if(s.platform === 'facebook') iconClass = "fa-brands fa-facebook";
+                else if(s.platform === 'instagram') iconClass = "fa-brands fa-instagram";
+                else if(s.platform === 'tiktok') iconClass = "fa-brands fa-tiktok";
+                else if(s.platform === 'youtube') iconClass = "fa-brands fa-youtube";
+                else if(s.platform === 'telegram') iconClass = "fa-brands fa-telegram";
+                container.innerHTML += `
+                    <a href="${s.url}" target="_blank" class="w-8 h-8 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-500 hover:text-amber-400 flex items-center justify-center text-xs text-slate-300 transition" title="${s.platform}">
+                        <i class="${iconClass}"></i>
+                    </a>
+                `;
+            });
+        }
 
-        cart.forEach((item) => {
-            let itemTotal = item.price * item.qty;
-            subtotal += itemTotal;
-            itemsSummaryText += `▫️ ${item.name} (${item.qty} ${item.unit}) - ${itemTotal} ج.م ${item.freeShipping ? '[شحن مجاني]' : ''}\n`;
-        });
+        function renderBanners() {
+            const container = document.getElementById('bannerContainer');
+            const wrapper = document.getElementById('slidesWrapper');
+            const dotsContainer = document.getElementById('slideDots');
+            if(!container || !wrapper) return;
 
-        let grandTotal = subtotal + shippingFee;
+            if(!bannerImages || bannerImages.length === 0) {
+                container.classList.add('hidden');
+                if(slideInterval) clearInterval(slideInterval);
+                return;
+            }
 
-        let message = `*🛒 طلب جديد من متجر Bumble*\n\n`;
-        message += `👤 *الاسم:* ${name}\n`;
-        message += `📞 *الهاتف:* ${phone}\n`;
-        message += `📍 *العنوان:* ${address}\n`;
-        if(!allFreeShipping && selectedZoneName) message += `🚚 *منطقة الشحن:* ${selectedZoneName}\n`;
-        if(allFreeShipping) message += `🚚 *الشحن:* مجاني بالكامل\n`;
-        if(notes) message += `📝 *ملاحظات:* ${notes}\n\n`;
-        message += `📦 *المنتجات المطلوبة:*\n${itemsSummaryText}\n`;
-        if(shippingFee > 0) message += `🚚 تكلفة الشحن: ${shippingFee} ج.م\n`;
-        message += `💰 *الإجمالي الكلي:* *${grandTotal} ج.م*\n`;
+            container.classList.remove('hidden');
+            wrapper.innerHTML = '';
+            dotsContainer.innerHTML = '';
 
-        let whatsappUrl = `[https://wa.me/$](https://wa.me/$){storeConfig.whatsapp}?text=` + encodeURIComponent(message);
-        cart = []; updateCartBadge(); toggleCartModal();
-        window.open(whatsappUrl, '_blank');
-    }
-</script>
+            bannerImages.forEach((b, index) => {
+                const isActive = index === 0 ? 'active' : '';
+                wrapper.innerHTML += `
+                    <div class="slide ${isActive} w-full h-full absolute inset-0 transition-opacity duration-500">
+                        <a href="${b.link || '#'}" ${b.link ? 'target="_blank"' : ''} class="w-full h-full block">
+                            <img src="${b.url || b.image}" class="w-full h-full object-cover" alt="إعلان Bumble">
+                        </a>
+                    </div>
+                `;
+                dotsContainer.innerHTML += `
+                    <button onclick="currentSlide(${index})" class="w-2.5 h-2.5 rounded-full ${index === 0 ? 'bg-amber-400' : 'bg-white/40'} transition"></button>
+                `;
+            });
+
+            if(slideInterval) clearInterval(slideInterval);
+            if(bannerImages.length > 1) {
+                slideInterval = setInterval(() => { changeSlide(1); }, 4000);
+            }
+        }
+
+        function changeSlide(n) {
+            if(!bannerImages || bannerImages.length === 0) return;
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('#slideDots button');
+            if(slides.length === 0) return;
+
+            slides[currentSlideIndex].classList.remove('active');
+            if(dots[currentSlideIndex]) dots[currentSlideIndex].className = "w-2.5 h-2.5 rounded-full bg-white/40 transition";
+
+            currentSlideIndex = (currentSlideIndex + n + slides.length) % slides.length;
+
+            slides[currentSlideIndex].classList.add('active');
+            if(dots[currentSlideIndex]) dots[currentSlideIndex].className = "w-2.5 h-2.5 rounded-full bg-amber-400 transition";
+        }
+
+        function currentSlide(n) {
+            if(!bannerImages || bannerImages.length === 0) return;
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('#slideDots button');
+            if(slides.length === 0) return;
+
+            slides[currentSlideIndex].classList.remove('active');
+            if(dots[currentSlideIndex]) dots[currentSlideIndex].className = "w-2.5 h-2.5 rounded-full bg-white/40 transition";
+
+            currentSlideIndex = n;
+
+            slides[currentSlideIndex].classList.add('active');
+            if(dots[currentSlideIndex]) dots[currentSlideIndex].className = "w-2.5 h-2.5 rounded-full bg-amber-400 transition";
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('hidden');
+            renderCartItems();
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItemsContainer');
+            if(!container) return;
+            container.innerHTML = '';
+            if(cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-500 text-xs py-8">السلة فارغة حالياً</p>`;
+                updateCartTotal();
+                return;
+            }
+            cart.forEach((item, index) => {
+                container.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-950 p-3 rounded-2xl border border-slate-800 text-xs">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100'}" class="w-12 h-12 object-cover rounded-xl border border-slate-800">
+                            <div>
+                                <h5 class="font-bold text-slate-100">${item.name}</h5>
+                                <p class="text-amber-400 font-semibold">${item.price} ج.م <span class="text-slate-500 font-normal">/ ${item.unit}</span> ${item.freeShipping ? '<span class="text-emerald-400 font-bold">[شحن مجاني]</span>' : ''}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="changeQty(${index}, -1)" class="w-7 h-7 bg-slate-900 border border-slate-800 hover:border-amber-500 rounded-lg flex items-center justify-center font-bold text-slate-300">-</button>
+                            <span class="font-bold w-5 text-center text-amber-400">${item.qty}</span>
+                            <button onclick="changeQty(${index}, 1)" class="w-7 h-7 bg-slate-900 border border-slate-800 hover:border-amber-500 rounded-lg flex items-center justify-center font-bold text-slate-300">+</button>
+                            <button onclick="removeFromCart(${index})" class="text-rose-500 hover:text-rose-400 mr-2 p-1"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+            updateCartTotal();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if(cart[index].qty <= 0) { cart.splice(index, 1); }
+            renderCartItems();
+            updateCartBadge();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCartItems();
+            updateCartBadge();
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            if(badge) badge.innerText = totalItems;
+        }
+
+        function populateDeliveryZones() {
+            const select = document.getElementById('deliveryZoneSelect');
+            if(!select) return;
+            select.innerHTML = '';
+            deliveryZones.forEach(z => {
+                select.innerHTML += `<option value="${z.fee}">${z.name} (شحن: ${z.fee} ج.م)</option>`;
+            });
+            updateCartTotal();
+        }
+
+        function updateCartTotal() {
+            let subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const allFreeShipping = cart.length > 0 && cart.every(item => item.freeShipping);
+            const zoneContainer = document.getElementById('deliveryZoneContainer');
+            const freeNotice = document.getElementById('freeShippingNotice');
+            const zoneSelect = document.getElementById('deliveryZoneSelect');
+
+            let shippingFee = 0;
+            if (allFreeShipping) {
+                if(zoneContainer) zoneContainer.classList.add('hidden');
+                if(freeNotice) freeNotice.classList.remove('hidden');
+                shippingFee = 0;
+            } else {
+                if(zoneContainer) zoneContainer.classList.remove('hidden');
+                if(freeNotice) freeNotice.classList.add('hidden');
+                shippingFee = zoneSelect && zoneSelect.value ? parseFloat(zoneSelect.value) : 0;
+            }
+
+            let grandTotal = subtotal + shippingFee;
+            const priceSpan = document.getElementById('cartTotalPrice');
+            if(priceSpan) priceSpan.innerText = grandTotal + " ج.م";
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            if(!grid) return;
+            grid.innerHTML = '';
+
+            let filtered = products;
+            if(currentCategory !== 'all') {
+                filtered = products.filter(p => (p.category || 'عام') === currentCategory);
+            }
+
+            const searchInput = document.getElementById('searchInput');
+            if(searchInput && searchInput.value.trim() !== '') {
+                const query = searchInput.value.toLowerCase();
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(query));
+            }
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-500 text-xs">لا توجد منتجات مسجلة في Bumble حالياً. يسعدنا إضافتها من لوحة التحكم التابعة لك.</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                let discountBadge = p.discount ? `<span class="absolute top-3 left-3 bg-amber-500 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full z-10 shadow-lg animate-pulse">${p.discount}</span>` : '';
+                let freeShippingBadge = p.freeShipping ? `<span class="absolute top-3 right-3 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full z-10 shadow-md"><i class="fa-solid fa-truck-fast"></i> مجاني</span>` : '';
+                let descHtml = p.description ? `<p class="text-[11px] text-slate-400 line-clamp-2 mt-1 leading-relaxed">${p.description}</p>` : '';
+
+                grid.innerHTML += `
+                    <div class="bg-slate-900/90 rounded-3xl border border-slate-800 shadow-xl overflow-hidden flex flex-col hover:border-amber-500/50 transition duration-300 relative group">
+                        ${discountBadge}
+                        ${freeShippingBadge}
+                        <div class="h-40 sm:h-52 bg-slate-950 relative overflow-hidden">
+                            <img src="${p.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute bottom-2 right-2 bg-slate-950/80 backdrop-blur-md text-amber-400 border border-slate-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-xl">${p.category || 'عام'}</span>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow justify-between gap-3">
+                            <div>
+                                <h4 class="font-bold text-slate-100 text-xs sm:text-sm line-clamp-1">${p.name}</h4>
+                                ${descHtml}
+                                <p class="text-amber-400 font-black text-sm sm:text-base mt-2">${p.price} ج.م <span class="text-[10px] text-slate-500 font-normal">/ ${p.unit || 'قطعة'}</span></p>
+                            </div>
+                            <button onclick="addToCart(${p.id || 0})" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-amber-500/10">
+                                <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id || p.id == id);
+            if(!product) return;
+            const existing = cart.find(item => item.id === id || item.id == id);
+            if(existing) { 
+                existing.qty += 1; 
+            } else { 
+                cart.push({ ...product, qty: 1 }); 
+            }
+            updateCartBadge();
+            showToast(`تمت إضافة "${product.name}" إلى سلة Bumble!`);
+        }
+
+        function showToast(message) {
+            let toast = document.getElementById('toastNotification');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toastNotification';
+                toast.className = 'fixed top-6 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-950 px-6 py-3 rounded-2xl shadow-2xl z-50 text-xs sm:text-sm font-black flex items-center gap-2 transition-all duration-300 opacity-0 -translate-y-5 pointer-events-none border border-amber-300';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-base"></i> <span>${message}</span>`;
+            setTimeout(() => {
+                toast.classList.remove('opacity-0', '-translate-y-5');
+                toast.classList.add('opacity-100', 'translate-y-0');
+            }, 10);
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', '-translate-y-5');
+            }, 2500);
+        }
+
+        function filterProducts() { renderProducts(); }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.className = "cat-btn px-5 py-2.5 rounded-2xl text-xs font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-100 transition shadow-sm";
+            });
+            event.target.className = "cat-btn px-5 py-2.5 rounded-2xl text-xs font-bold bg-amber-500 text-slate-950 transition shadow-lg shadow-amber-500/10";
+            renderProducts();
+        }
+
+        function renderCategoryFilters() {
+            const container = document.getElementById('categoryFilters');
+            if(!container) return;
+            const categories = [...new Set(products.map(p => p.category || 'عام'))];
+            container.innerHTML = `<button onclick="setCategory('all')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs font-bold ${currentCategory === 'all' ? 'bg-amber-500 text-slate-950' : 'bg-slate-900 border border-slate-800 text-slate-400'} transition shadow-sm">الكل</button>`;
+            categories.forEach(cat => {
+                const isActive = currentCategory === cat;
+                container.innerHTML += `<button onclick="setCategory('${cat}')" class="cat-btn px-5 py-2.5 rounded-2xl text-xs font-bold ${isActive ? 'bg-amber-500 text-slate-950' : 'bg-slate-900 border border-slate-800 text-slate-400'} transition shadow-sm">${cat}</button>`;
+            });
+        }
+
+        function openAdminModal() { document.getElementById('adminLoginModal').classList.remove('hidden'); }
+        function closeAdminLogin() { document.getElementById('adminLoginModal').classList.add('hidden'); document.getElementById('adminPasswordInput').value = ''; }
+
+        function verifyAdminPassword() {
+            const pass = document.getElementById('adminPasswordInput').value;
+            if(pass === FIXED_ADMIN_PASSWORD) {
+                closeAdminLogin();
+                openAdminDashboard();
+            } else { alert("كلمة السر غير صحيحة!"); }
+        }
+
+        function openAdminDashboard() {
+            document.getElementById('adminDashboardModal').classList.remove('hidden');
+            loadAdminDataToInputs();
+            renderAdminSocialList();
+            renderAdminBannersList();
+            renderAdminZonesList();
+            renderAdminProductsList();
+            populateProductCategories();
+        }
+
+        function closeAdminDashboard() { document.getElementById('adminDashboardModal').classList.add('hidden'); }
+
+        function loadAdminDataToInputs() {
+            document.getElementById('settingStoreName').value = storeConfig.name;
+            document.getElementById('settingStoreDesc').value = storeConfig.description || "";
+            document.getElementById('settingLogoUrlInput').value = storeConfig.logoUrl || "";
+            document.getElementById('settingWhatsApp').value = storeConfig.whatsapp;
+            document.getElementById('settingGoogleSheet').value = FIXED_GOOGLE_SHEET_URL;
+            document.getElementById('settingHeaderColor').value = storeConfig.headerColor || "#121212";
+            document.getElementById('settingButtonColor').value = storeConfig.buttonColor || "#F5A623";
+        }
+
+        function addSocialLink() {
+            const platform = document.getElementById('newSocialPlatform').value;
+            const url = document.getElementById('newSocialUrl').value.trim();
+            if(!url) { alert("يرجى إدخال رابط الحساب"); return; }
+            socialLinks.push({ platform, url });
+            document.getElementById('newSocialUrl').value = '';
+            renderAdminSocialList();
+        }
+
+        function renderAdminSocialList() {
+            const list = document.getElementById('adminSocialList');
+            if(!list) return;
+            list.innerHTML = '';
+            socialLinks.forEach((s, idx) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-900 p-2 rounded-xl border border-slate-800 text-xs">
+                        <span><b>${s.platform}:</b> ${s.url}</span>
+                        <button onclick="removeSocialLink(${idx})" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+        function removeSocialLink(idx) { socialLinks.splice(idx, 1); renderAdminSocialList(); }
+
+        function addBannerImage() {
+            const fileInput = document.getElementById('newBannerFile');
+            const linkInput = document.getElementById('newBannerLink');
+            const link = linkInput.value.trim();
+            if(fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    bannerImages.push({ url: e.target.result, link });
+                    fileInput.value = ''; linkInput.value = '';
+                    renderAdminBannersList();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else { alert("يرجى اختيار صورة للإعلان"); }
+        }
+
+        function renderAdminBannersList() {
+            const list = document.getElementById('adminBannersList');
+            if(!list) return;
+            list.innerHTML = '';
+            bannerImages.forEach((b, idx) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-900 p-2 rounded-xl border border-slate-800 text-xs">
+                        <img src="${b.url || b.image}" class="w-10 h-6 object-cover rounded">
+                        <span class="truncate max-w-[200px]">${b.link || 'بدون رابط'}</span>
+                        <button onclick="removeBannerImage(${idx})" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+        function removeBannerImage(idx) { bannerImages.splice(idx, 1); renderAdminBannersList(); }
+
+        function saveZoneItem() {
+            const name = document.getElementById('newZoneName').value.trim();
+            const fee = parseFloat(document.getElementById('newZoneFee').value);
+            const editIdx = parseInt(document.getElementById('editingZoneIndex').value);
+            if(!name || isNaN(fee)) { alert("يرجى إدخال اسم المنطقة والتكلفة"); return; }
+            if(editIdx >= 0) {
+                deliveryZones[editIdx] = { name, fee };
+                document.getElementById('editingZoneIndex').value = -1;
+                document.getElementById('zoneActionBtn').innerText = "إضافة منطقة الشحن";
+            } else { deliveryZones.push({ name, fee }); }
+            document.getElementById('newZoneName').value = '';
+            document.getElementById('newZoneFee').value = '';
+            renderAdminZonesList(); populateDeliveryZones();
+        }
+
+        function renderAdminZonesList() {
+            const list = document.getElementById('adminZonesList');
+            if(!list) return;
+            list.innerHTML = '';
+            deliveryZones.forEach((z, idx) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-900 p-2 rounded-xl border border-slate-800 text-xs">
+                        <span><b>${z.name}:</b> ${z.fee} ج.م</span>
+                        <div class="flex gap-2">
+                            <button onclick="editZone(${idx})" class="text-amber-400"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="removeZone(${idx})" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        function editZone(idx) {
+            document.getElementById('newZoneName').value = deliveryZones[idx].name;
+            document.getElementById('newZoneFee').value = deliveryZones[idx].fee;
+            document.getElementById('editingZoneIndex').value = idx;
+            document.getElementById('zoneActionBtn').innerText = "تعديل منطقة الشحن";
+        }
+        function removeZone(idx) { deliveryZones.splice(idx, 1); renderAdminZonesList(); populateDeliveryZones(); }
+
+        function saveProductItem() {
+            const name = document.getElementById('newProdName').value.trim();
+            const price = parseFloat(document.getElementById('newProdPrice').value);
+            const discount = document.getElementById('newProdDiscount').value.trim();
+            const description = document.getElementById('newProdDesc').value.trim();
+            const category = document.getElementById('newProdCategory').value || 'عام';
+            const unit = document.getElementById('newProdUnit').value;
+            const freeShipping = document.getElementById('newProdFreeShipping').checked;
+            const editIdx = parseInt(document.getElementById('editingProductIndex').value);
+            const fileInput = document.getElementById('newProdImageFile');
+
+            if(!name || isNaN(price)) { alert("يرجى إدخال اسم المنتج والسعر على الأقل"); return; }
+            let imageUrl = editIdx >= 0 ? products[editIdx].image : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300';
+
+            const proceedSave = (imgResult) => {
+                if(imgResult) imageUrl = imgResult;
+                if(editIdx >= 0) {
+                    products[editIdx] = { ...products[editIdx], name, price, discount, description, category, unit, freeShipping, image: imageUrl };
+                    document.getElementById('editingProductIndex').value = -1;
+                    document.getElementById('productActionBtn').innerText = "إضافة المنتج للقائمة";
+                } else {
+                    const newId = products.length > 0 ? Math.max(...products.map(p => p.id || 0)) + 1 : 1;
+                    products.push({ id: newId, name, price, discount, description, category, unit, freeShipping, image: imageUrl });
+                }
+                document.getElementById('newProdName').value = '';
+                document.getElementById('newProdPrice').value = '';
+                document.getElementById('newProdDiscount').value = '';
+                document.getElementById('newProdDesc').value = '';
+                document.getElementById('newProdFreeShipping').checked = false;
+                fileInput.value = '';
+                renderAdminProductsList(); renderCategoryFilters(); renderProducts(); populateProductCategories();
+            };
+
+            if(fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) { proceedSave(e.target.result); };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else { proceedSave(null); }
+        }
+
+        function renderAdminProductsList() {
+            const list = document.getElementById('adminProductsList');
+            if(!list) return;
+            list.innerHTML = '';
+            products.forEach((p, idx) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center bg-slate-900 p-2 rounded-xl border border-slate-800 text-xs">
+                        <div class="flex items-center gap-2">
+                            <img src="${p.image}" class="w-8 h-8 object-cover rounded-lg">
+                            <span><b>${p.name}</b> (${p.price} ج.م) ${p.freeShipping ? '<span class="text-emerald-400">[شحن مجاني]</span>' : ''}</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="editProduct(${idx})" class="text-amber-400"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="removeProduct(${idx})" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        function editProduct(idx) {
+            const p = products[idx];
+            document.getElementById('newProdName').value = p.name;
+            document.getElementById('newProdPrice').value = p.price;
+            document.getElementById('newProdDiscount').value = p.discount || '';
+            document.getElementById('newProdDesc').value = p.description || '';
+            document.getElementById('newProdUnit').value = p.unit || 'قطعة';
+            document.getElementById('newProdFreeShipping').checked = !!p.freeShipping;
+            document.getElementById('editingProductIndex').value = idx;
+            document.getElementById('productActionBtn').innerText = "تعديل المنتج";
+            populateProductCategories(p.category);
+        }
+        function removeProduct(idx) {
+            products.splice(idx, 1);
+            renderAdminProductsList(); renderCategoryFilters(); renderProducts(); populateProductCategories();
+        }
+
+        function saveAndSyncEverything() {
+            storeConfig.name = "Bumble";
+            storeConfig.description = document.getElementById('settingStoreDesc').value.trim();
+            storeConfig.logoUrl = document.getElementById('settingLogoUrlInput').value.trim();
+            storeConfig.whatsapp = document.getElementById('settingWhatsApp').value.trim() || storeConfig.whatsapp;
+            storeConfig.googleSheetUrl = FIXED_GOOGLE_SHEET_URL;
+            storeConfig.headerColor = document.getElementById('settingHeaderColor').value;
+            storeConfig.buttonColor = document.getElementById('settingButtonColor').value;
+
+            localStorage.setItem('bumble_store_config', JSON.stringify(storeConfig));
+            localStorage.setItem('bumble_store_products', JSON.stringify(products));
+            localStorage.setItem('bumble_store_zones', JSON.stringify(deliveryZones));
+            localStorage.setItem('bumble_store_social', JSON.stringify(socialLinks));
+            localStorage.setItem('bumble_store_banners', JSON.stringify(bannerImages));
+
+            renderEverything();
+
+            const payload = {
+                action: "saveData",
+                config: storeConfig,
+                products: products,
+                zones: deliveryZones,
+                socialLinks: socialLinks,
+                bannerImages: bannerImages
+            };
+
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> جاري تحديث بيانات Bumble...`;
+            btn.disabled = true;
+
+            fetch(FIXED_GOOGLE_SHEET_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            }).then(res => res.json())
+              .then(response => {
+                alert("✅ تم حفظ وتحديث خوادم Bumble وجوجل شيت بنجاح!");
+                closeAdminDashboard();
+            }).catch(err => {
+                alert("✅ تم حفظ وتحديث متجر Bumble بنجاح.");
+                closeAdminDashboard();
+            }).finally(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        }
+
+        function checkoutWhatsApp() {
+            const name = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const address = document.getElementById('clientAddress').value.trim();
+            const notes = document.getElementById('clientNotes').value.trim();
+            const zoneSelect = document.getElementById('deliveryZoneSelect');
+            
+            if (!name || !phone || !address) { alert("يرجى إكمال بيانات التوصيل (الاسم، الهاتف، العنوان)."); return; }
+            if (cart.length === 0) { alert("السلة فارغة!"); return; }
+
+            const allFreeShipping = cart.every(item => item.freeShipping);
+            let selectedZoneName = "شحن مجاني";
+            let shippingFee = 0;
+
+            if (!allFreeShipping) {
+                if (zoneSelect && zoneSelect.selectedIndex >= 0) {
+                    selectedZoneName = zoneSelect.options[zoneSelect.selectedIndex].text;
+                    shippingFee = parseFloat(zoneSelect.value) || 0;
+                }
+            }
+
+            let itemsSummaryText = "";
+            let subtotal = 0;
+
+            cart.forEach((item) => {
+                let itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+                itemsSummaryText += `▫️ ${item.name} (${item.qty} ${item.unit}) - ${itemTotal} ج.م ${item.freeShipping ? '[شحن مجاني]' : ''}\n`;
+            });
+
+            let grandTotal = subtotal + shippingFee;
+
+            let message = `*🐝 طلب جديد من متجر Bumble*\n\n`;
+            message += `👤 *الاسم:* ${name}\n`;
+            message += `📞 *الهاتف:* ${phone}\n`;
+            message += `📍 *العنوان:* ${address}\n`;
+            if(!allFreeShipping && selectedZoneName) message += `🚚 *منطقة الشحن:* ${selectedZoneName}\n`;
+            if(allFreeShipping) message += `🚚 *الشحن:* مجاني بالكامل\n`;
+            if(notes) message += `📝 *ملاحظات:* ${notes}\n\n`;
+            message += `📦 *المنتجات المطلوبة:*\n${itemsSummaryText}\n`;
+            if(shippingFee > 0) message += `🚚 تكلفة الشحن: ${shippingFee} ج.م\n`;
+            message += `💰 *الإجمالي الكلي:* *${grandTotal} ج.م*\n`;
+
+            let whatsappUrl = `https://wa.me/${storeConfig.whatsapp}?text=` + encodeURIComponent(message);
+            cart = []; updateCartBadge(); toggleCartModal();
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
