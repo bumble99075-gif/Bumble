@@ -448,7 +448,6 @@
     </div>
 
     <script>
-        // رابط جوجل شيت الجديد الذي قمت بتحديده وتخزين بياناتك الجديدة عليه
         const FIXED_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbx7utqhq7doyur_Tb-zPtio-VBAfTiTRHjymsCdFiijMbECakmIWgMCHVkq_MJJhq_4HQ/exec";
 
         const DEFAULT_PRODUCTS = [];
@@ -624,6 +623,12 @@
             document.documentElement.style.setProperty('--header-color', storeConfig.headerColor || "#121212");
             document.documentElement.style.setProperty('--button-color', storeConfig.buttonColor || "#F5A623");
             
+            // تحديث رابط زر الواتساب العائم (الشكاوي والاستفسارات) بناءً على رقم المتجر
+            const floatingWhatsapp = document.getElementById('floatingWhatsappBtn');
+            if (floatingWhatsapp && storeConfig.whatsapp) {
+                floatingWhatsapp.href = `https://wa.me/${storeConfig.whatsapp}`;
+            }
+
             const navLogo = document.getElementById('navLogoContainer');
             if (storeConfig.logoUrl && storeConfig.logoUrl.trim() !== "") {
                 navLogo.innerHTML = `<img src="${storeConfig.logoUrl}" alt="Bumble Logo" class="w-full h-full object-contain">`;
